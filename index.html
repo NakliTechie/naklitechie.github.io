@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chirag Patnaik | NakliTechie</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #24292e;
+            --accent-color: #0366d6;
+            --bg-light: #f6f8fa;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: var(--bg-light);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #444d56 100%);
+            color: white;
+            padding: 4rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .bio-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+        
+        .project-card {
+            background: white;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            height: 100%;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            border-color: var(--accent-color);
+        }
+        
+        .project-card h5 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .project-card h5 a {
+            text-decoration: none;
+        }
+        
+        .project-card h5 a:hover {
+            text-decoration: underline;
+        }
+        
+        .project-description {
+            color: #586069;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .language-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            background: #f6f8fa;
+            border: 1px solid #e1e4e8;
+            color: #24292e;
+        }
+        
+        .private-badge {
+            background: #ffd33d;
+            color: #000;
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+        
+        .btn-gh {
+            font-size: 0.85rem;
+            padding: 0.35rem 0.75rem;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            border-bottom: 2px solid #e1e4e8;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        footer {
+            background: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .stats-badge {
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-3 text-center text-md-start mb-3 mb-md-0">
+                    <img src="https://github.com/NakliTechie.png" alt="Chirag Patnaik" class="profile-avatar">
+                </div>
+                <div class="col-md-9">
+                    <h1 class="display-5 fw-bold mb-2">Chirag Patnaik</h1>
+                    <h4 class="text-white-50 mb-3">@NakliTechie</h4>
+                    <p class="bio-text mb-3">
+                        I work at the intersection of marketing, communications, technology & politics. 
+                        My experience over the last 2 decades has spanned media and technology firms.
+                    </p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <span class="stats-badge"><i class="bi bi-repo"></i> 21 Repos</span>
+                        <span class="stats-badge"><i class="bi bi-people"></i> 2 Followers</span>
+                        <span class="stats-badge"><i class="bi bi-person-lines-fill"></i> 2 Following</span>
+                    </div>
+                    <div class="mt-3">
+                        <a href="http://www.chiragpatnaik.com" class="text-white" target="_blank">
+                            <i class="bi bi-globe"></i> chiragpatnaik.com
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Preamble -->
+    <section class="container mb-5">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="section-title">Welcome to My Project Portfolio</h2>
+                <p class="lead">
+                    This is a collection of my open-source projects, experiments, and tools built over the years. 
+                    Most of these are browser-based applications that run entirely client-side, emphasizing privacy 
+                    and zero server dependencies.
+                </p>
+                <p>
+                    You'll find everything from games (3D Tic-Tac-Toe, Chess, Checkers) to productivity tools 
+                    (voice transcription, code snippets, document processors). All projects are built with 
+                    modern web technologies and are available for you to explore, fork, and contribute to.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="container mb-5">
+        <h2 class="section-title"><i class="bi bi-collection"></i> Projects</h2>
+        <div class="row g-4" id="projects-grid">
+            <!-- Projects will be loaded here -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p class="mb-2">&copy; 2026 Chirag Patnaik (@NakliTechie)</p>
+            <p class="mb-0">
+                <a href="https://github.com/NakliTechie" class="text-white" target="_blank">
+                    <i class="bi bi-github"></i> GitHub Profile
+                </a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const projects = [
+            {
+                name: "3D Tic-Tac-Toe",
+                repo: "3d-tic-tac-toe",
+                description: "3D Tic-Tac-Toe playable in the browser — Three.js, vs AI or 2-player",
+                language: "HTML",
+                private: false,
+                homepage: null
+            },
+            {
+                name: "BabelLocal",
+                repo: "BabelLocal",
+                description: "In Browser translator with no dependencies",
+                language: "HTML",
+                private: false,
+                homepage: null
+            },
+            {
+                name: "Blog",
+                repo: "blog",
+                description: "blog",
+                language: "Python",
+                private: false,
+                homepage: null
+            },
+            {
+                name: "Chokepoint",
+                repo: "chokepoint",
+                description: "Tower Defense game using maps from strait-command",
+                language: "HTML",
+                private: false,
+                homepage: null
+            },
+            {
+                name: "Clacker",
+                repo: "Clacker",
+                description: "No-dependency flipboard for your screen",
+                language: "HTML",
+                private: false,
+                homepage: null
+            },
+            {
+                name: "GambitLocal",
+                repo: "GambitLocal",
+                description: "In browser Chess using stockfish and with correspondence mode. No server side components",
+                language: "HTML",
+                private: false,
+                homepage: null
+            },
+            {
+                name: "GPU Programming",
+                repo: "GPU-Programming",
+                description: "GPU programming projects and experiments",
+                language: "CUDA",
+                private: false,
+                homepage: null
+            },
+            {
+                name: "KingMe",
+                repo: "KingMe",
+                description: "In Browser Draughts/Checkers Game with Correspondence mode and no dependencies",
+                language: "HTML",
+                private: false,
+                homepage: null
+            },
+            {
+                name: "PineScript Coder",
+                repo: "PineScriptCoder",
+                description: "PineScript coding resources and tools",
+                language: "HTML",
+                private: false,
+                homepage: null
+            },
+            {
+                name: "Prediction Market",
+                repo: "PredictionMarket",
+                description: "Prediction market simulation and tools",
+                language: "HTML",
+                private: false,
+                homepage: null
+            },
+            {
+                name: "Prompts",
+                repo: "prompts",
+                description: "Collection of AI/LLM prompts",
+                language: null,
+                private: false,
+                homepage: null
+            },
+            {
+                name: "Qwen Backup",
+                repo: "qwen-backup",
+                description: "CLI instructions and shell scripts to maintain local backups",
+                language: "Shell",
+                private: false,
+                homepage: null
+            },
+            {
+                name: "ScanLocal",
+                repo: "ScanLocal",
+                description: "Local scanning tools",
+                language: "HTML",
+                private: false,
+                homepage: null
+            },
+            {
+                name: "SnipLocal",
+                repo: "SnipLocal",
+                description: "Local code snippet management",
+                language: "HTML",
+                private: false,
+                homepage: null
+            },
+            {
+                name: "Sorting Barrier Benchmark",
+                repo: "SortingBarrierBenchmark",
+                description: "A Python implementation and benchmark of the 'Breaking the Sorting Barrier' SSSP algorithm against Dijkstra's, using OpenStreetMap data",
+                language: "Python",
+                private: false,
+                homepage: null
+            },
+            {
+                name: "Strait Command",
+                repo: "strait-command",
+                description: "Clear the Hormuz Strait - strategy game",
+                language: "HTML",
+                private: false,
+                homepage: null
+            },
+            {
+                name: "StripLocal",
+                repo: "StripLocal",
+                description: "Local text processing tools",
+                language: "HTML",
+                private: false,
+                homepage: null
+            },
+            {
+                name: "Terra Code CLI",
+                repo: "terra-code-cli",
+                description: "Terraform code CLI tools",
+                language: null,
+                private: false,
+                homepage: null
+            },
+            {
+                name: "Vampire Hunter",
+                repo: "VampireHunter",
+                description: "Vampire Hunter game/project",
+                language: "Python",
+                private: false,
+                homepage: null
+            },
+            {
+                name: "VoiceVault",
+                repo: "VoiceVault",
+                description: "In Browser voice transcription using cached LLMs. Fully private and local after initial cache. No transmission off machines",
+                language: "HTML",
+                private: false,
+                homepage: null
+            },
+            {
+                name: "Worldview",
+                repo: "worldview",
+                description: "Worldview visualization/project",
+                language: "JavaScript",
+                private: false,
+                homepage: null
+            }
+        ];
+
+        function renderProjects() {
+            const grid = document.getElementById('projects-grid');
+            let html = '';
+            
+            projects.forEach(project => {
+                const tryLink = project.homepage ? 
+                    `<a href="${project.homepage}" class="btn btn-success btn-gh" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Try</a>` : '';
+                
+                const languageBadge = project.language ? 
+                    `<span class="language-badge"><i class="bi bi-circle-fill" style="font-size: 0.5rem; vertical-align: middle;"></i> ${project.language}</span>` : '';
+                
+                const privateBadge = project.private ? 
+                    '<span class="language-badge private-badge"><i class="bi bi-lock-fill"></i> Private</span>' : '';
+                
+                html += `
+                    <div class="col-md-6 col-lg-4">
+                        <div class="project-card p-4 d-flex flex-column">
+                            <h5>
+                                <a href="https://github.com/NakliTechie/${project.repo}" target="_blank">
+                                    <i class="bi bi-repo"></i> ${project.name}
+                                </a>
+                            </h5>
+                            <div class="mb-2">
+                                ${languageBadge}
+                                ${privateBadge}
+                            </div>
+                            <p class="project-description flex-grow-1">${project.description || 'No description provided'}</p>
+                            <div class="card-actions">
+                                <a href="https://github.com/NakliTechie/${project.repo}" class="btn btn-outline-primary btn-gh" target="_blank">
+                                    <i class="bi bi-github"></i> View Repo
+                                </a>
+                                ${tryLink}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            grid.innerHTML = html;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', renderProjects);
+    </script>
+</body>
+</html>
