@@ -192,22 +192,80 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const projects = [
+            // ── Browser-native series (reverse chronological) ──
             {
-                name: "3D Tic-Tac-Toe",
-                repo: "3d-tic-tac-toe",
-                description: "3D Tic-Tac-Toe playable in the browser — Three.js, vs AI or 2-player",
+                name: "LocalMind",
+                repo: "LocalMind",
+                description: "Private AI chatbot — Gemma 3/4 running entirely in your browser via WebGPU. No server, no API keys",
                 language: "HTML",
                 private: false,
-                homepage: "https://naklitechie.github.io/3d-tic-tac-toe/"
+                homepage: "https://naklitechie.github.io/LocalMind/"
+            },
+            {
+                name: "ScanLocal",
+                repo: "ScanLocal",
+                description: "In-browser OCR — extract text from images and PDFs, fully private and local",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklitechie.github.io/ScanLocal/"
+            },
+            {
+                name: "Prediction Market",
+                repo: "PredictionMarket",
+                description: "Educational prediction market simulator — Parimutuel + LMSR markets, 4-player demo mode",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklitechie.github.io/PredictionMarket/"
+            },
+            {
+                name: "SnipLocal",
+                repo: "SnipLocal",
+                description: "Background remover — RMBG-1.4, passport photo mode, edge softening, no uploads",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklitechie.github.io/SnipLocal/"
+            },
+            {
+                name: "KingMe",
+                repo: "KingMe",
+                description: "English draughts/checkers vs minimax AI — custom SVG board, correspondence mode, zero dependencies",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklitechie.github.io/KingMe/"
+            },
+            {
+                name: "VoiceVault",
+                repo: "VoiceVault",
+                description: "In-browser voice transcription — Whisper model, fully private and local after initial cache",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklitechie.github.io/VoiceVault/"
+            },
+            {
+                name: "GambitLocal",
+                repo: "GambitLocal",
+                description: "In-browser chess vs Stockfish — correspondence mode via URL, no server side components",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklitechie.github.io/GambitLocal/"
+            },
+            {
+                name: "StripLocal",
+                repo: "StripLocal",
+                description: "EXIF metadata stripper — drag-and-drop images, canvas re-encode, zero dependencies",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklitechie.github.io/StripLocal/"
             },
             {
                 name: "BabelLocal",
                 repo: "BabelLocal",
-                description: "In Browser translator with no dependencies",
+                description: "Universal translator — 55 languages, NLLB model via Transformers.js, fully in-browser",
                 language: "HTML",
                 private: false,
                 homepage: "https://naklitechie.github.io/BabelLocal/"
             },
+            // ── Games & experiments ──
             {
                 name: "Chokepoint",
                 repo: "chokepoint",
@@ -215,6 +273,22 @@
                 language: "HTML",
                 private: false,
                 homepage: "https://naklitechie.github.io/chokepoint/"
+            },
+            {
+                name: "Strait Command",
+                repo: "strait-command",
+                description: "Clear the Hormuz Strait — strategy game",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklitechie.github.io/strait-command/"
+            },
+            {
+                name: "3D Tic-Tac-Toe",
+                repo: "3d-tic-tac-toe",
+                description: "3D Tic-Tac-Toe playable in the browser — Three.js, vs AI or 2-player",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklitechie.github.io/3d-tic-tac-toe/"
             },
             {
                 name: "Clacker",
@@ -225,13 +299,22 @@
                 homepage: "https://naklitechie.github.io/Clacker/"
             },
             {
-                name: "GambitLocal",
-                repo: "GambitLocal",
-                description: "In browser Chess using stockfish and with correspondence mode. No server side components",
-                language: "HTML",
+                name: "Vampire Hunter",
+                repo: "VampireHunter",
+                description: "Vampire Hunter game/project",
+                language: "Python",
                 private: false,
-                homepage: "https://naklitechie.github.io/GambitLocal/"
+                homepage: null
             },
+            {
+                name: "Worldview",
+                repo: "worldview",
+                description: "Worldview visualization/project",
+                language: "JavaScript",
+                private: false,
+                homepage: null
+            },
+            // ── Tools & utilities ──
             {
                 name: "GPU Programming",
                 repo: "GPU-Programming",
@@ -241,34 +324,18 @@
                 homepage: null
             },
             {
-                name: "KingMe",
-                repo: "KingMe",
-                description: "In Browser Draughts/Checkers Game with Correspondence mode and no dependencies",
-                language: "HTML",
+                name: "Sorting Barrier Benchmark",
+                repo: "SortingBarrierBenchmark",
+                description: "A Python implementation and benchmark of the 'Breaking the Sorting Barrier' SSSP algorithm against Dijkstra's, using OpenStreetMap data",
+                language: "Python",
                 private: false,
-                homepage: "https://naklitechie.github.io/KingMe/"
+                homepage: null
             },
             {
                 name: "PineScript Coder",
                 repo: "PineScriptCoder",
                 description: "PineScript coding resources and tools",
                 language: "HTML",
-                private: false,
-                homepage: null
-            },
-            {
-                name: "Prediction Market",
-                repo: "PredictionMarket",
-                description: "Prediction market simulation and tools",
-                language: "HTML",
-                private: false,
-                homepage: "https://naklitechie.github.io/PredictionMarket/"
-            },
-            {
-                name: "Prompts",
-                repo: "prompts",
-                description: "Collection of AI/LLM prompts",
-                language: null,
                 private: false,
                 homepage: null
             },
@@ -281,46 +348,6 @@
                 homepage: null
             },
             {
-                name: "ScanLocal",
-                repo: "ScanLocal",
-                description: "Local scanning tools",
-                language: "HTML",
-                private: false,
-                homepage: "https://naklitechie.github.io/ScanLocal/"
-            },
-            {
-                name: "SnipLocal",
-                repo: "SnipLocal",
-                description: "Local code snippet management",
-                language: "HTML",
-                private: false,
-                homepage: "https://naklitechie.github.io/SnipLocal/"
-            },
-            {
-                name: "Sorting Barrier Benchmark",
-                repo: "SortingBarrierBenchmark",
-                description: "A Python implementation and benchmark of the 'Breaking the Sorting Barrier' SSSP algorithm against Dijkstra's, using OpenStreetMap data",
-                language: "Python",
-                private: false,
-                homepage: null
-            },
-            {
-                name: "Strait Command",
-                repo: "strait-command",
-                description: "Clear the Hormuz Strait - strategy game",
-                language: "HTML",
-                private: false,
-                homepage: "https://naklitechie.github.io/strait-command/"
-            },
-            {
-                name: "StripLocal",
-                repo: "StripLocal",
-                description: "Local text processing tools",
-                language: "HTML",
-                private: false,
-                homepage: "https://naklitechie.github.io/StripLocal/"
-            },
-            {
                 name: "Terra Code CLI",
                 repo: "terra-code-cli",
                 description: "Terraform code CLI tools",
@@ -329,26 +356,10 @@
                 homepage: null
             },
             {
-                name: "Vampire Hunter",
-                repo: "VampireHunter",
-                description: "Vampire Hunter game/project",
-                language: "Python",
-                private: false,
-                homepage: null
-            },
-            {
-                name: "VoiceVault",
-                repo: "VoiceVault",
-                description: "In Browser voice transcription using cached LLMs. Fully private and local after initial cache. No transmission off machines",
-                language: "HTML",
-                private: false,
-                homepage: "https://naklitechie.github.io/VoiceVault/"
-            },
-            {
-                name: "Worldview",
-                repo: "worldview",
-                description: "Worldview visualization/project",
-                language: "JavaScript",
+                name: "Prompts",
+                repo: "prompts",
+                description: "Collection of AI/LLM prompts",
+                language: null,
                 private: false,
                 homepage: null
             }
