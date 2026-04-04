@@ -192,7 +192,7 @@
                 </div>
                 <div class="col-md-9">
                     <h1 class="display-5 fw-bold mb-2">Chirag Patnaik</h1>
-                    <h4 class="text-white-50 mb-3"><a href="https://github.com/NakliTechie" class="text-white-50 text-decoration-none" target="_blank">@NakliTechie</a></h4>
+                    <h4 class="text-white-50 mb-3"><a href="https://github.com/NakliTechie" class="text-white-50 text-decoration-none">@NakliTechie</a></h4>
                     <p class="bio-text mb-3">
                         I work at the intersection of marketing, communications, technology & politics.
                         My experience over the last 2 decades has spanned media and technology firms.
@@ -201,7 +201,7 @@
                         <span class="stats-badge"><i class="bi bi-repo"></i> 22 Repos</span>
                     </div>
                     <div class="mt-3">
-                        <a href="http://www.chiragpatnaik.com" class="text-white" target="_blank">
+                        <a href="http://www.chiragpatnaik.com" class="text-white">
                             <i class="bi bi-globe"></i> chiragpatnaik.com
                         </a>
                     </div>
@@ -243,7 +243,7 @@
         <div class="container text-center">
             <p class="mb-2">&copy; 2026 Chirag Patnaik (@NakliTechie)</p>
             <p class="mb-0">
-                <a href="https://github.com/NakliTechie" class="text-white" target="_blank">
+                <a href="https://github.com/NakliTechie" class="text-white">
                     <i class="bi bi-github"></i> GitHub Profile
                 </a>
             </p>
@@ -287,7 +287,7 @@
             {
                 name: "LocalMind",
                 repo: "LocalMind",
-                description: "Private AI chatbot &mdash; Gemma 3/4 running entirely in your browser via WebGPU. No server, no API keys",
+                description: "Private AI research agent &mdash; 9 tools, RAG memory, web search, PDF/DOCX ingestion, multimodal. Gemma 4 via WebGPU, zero backend",
                 language: "HTML",
                 private: false,
                 homepage: "https://naklitechie.github.io/LocalMind/",
@@ -512,7 +512,7 @@
 
             projects.forEach(project => {
                 const tryLink = project.homepage ?
-                    `<a href="${project.homepage}" class="btn btn-success btn-gh" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Try</a>` : '';
+                    `<a href="${project.homepage}" class="btn btn-success btn-gh"><i class="bi bi-box-arrow-up-right"></i> Try</a>` : '';
 
                 const languageBadge = project.language ?
                     `<span class="language-badge"><i class="bi bi-circle-fill" style="font-size: 0.5rem; vertical-align: middle;"></i> ${project.language}</span>` : '';
@@ -530,7 +530,7 @@
                     <div class="col-md-6 col-lg-4 project-col" data-tags="${tagsData}">
                         <div class="project-card p-4 d-flex flex-column">
                             <h5>
-                                <a href="https://github.com/NakliTechie/${project.repo}" target="_blank">
+                                <a href="https://github.com/NakliTechie/${project.repo}">
                                     <i class="bi bi-repo"></i> ${project.name}
                                 </a>
                             </h5>
@@ -543,7 +543,7 @@
                             </div>
                             <p class="project-description flex-grow-1">${project.description || 'No description provided'}</p>
                             <div class="card-actions">
-                                <a href="https://github.com/NakliTechie/${project.repo}" class="btn btn-outline-primary btn-gh" target="_blank">
+                                <a href="https://github.com/NakliTechie/${project.repo}" class="btn btn-outline-primary btn-gh">
                                     <i class="bi bi-github"></i> View Repo
                                 </a>
                                 ${tryLink}
