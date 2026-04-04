@@ -12,19 +12,19 @@
             --accent-color: #0366d6;
             --bg-light: #f6f8fa;
         }
-        
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
             background: var(--bg-light);
         }
-        
+
         .hero {
             background: linear-gradient(135deg, var(--primary-color) 0%, #444d56 100%);
             color: white;
             padding: 4rem 0;
             margin-bottom: 2rem;
         }
-        
+
         .profile-avatar {
             width: 150px;
             height: 150px;
@@ -32,13 +32,13 @@
             border: 4px solid white;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
-        
+
         .bio-text {
             font-size: 1.1rem;
             line-height: 1.6;
             opacity: 0.95;
         }
-        
+
         .project-card {
             background: white;
             border: 1px solid #e1e4e8;
@@ -46,32 +46,32 @@
             transition: all 0.2s ease;
             height: 100%;
         }
-        
+
         .project-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 24px rgba(0,0,0,0.12);
             border-color: var(--accent-color);
         }
-        
+
         .project-card h5 {
             color: var(--accent-color);
             margin-bottom: 0.5rem;
         }
-        
+
         .project-card h5 a {
             text-decoration: none;
         }
-        
+
         .project-card h5 a:hover {
             text-decoration: underline;
         }
-        
+
         .project-description {
             color: #586069;
             font-size: 0.9rem;
             margin-bottom: 1rem;
         }
-        
+
         .language-badge {
             display: inline-block;
             padding: 2px 10px;
@@ -81,42 +81,104 @@
             border: 1px solid #e1e4e8;
             color: #24292e;
         }
-        
+
         .private-badge {
             background: #ffd33d;
             color: #000;
         }
-        
+
         .card-actions {
             display: flex;
             gap: 0.5rem;
             margin-top: auto;
         }
-        
+
         .btn-gh {
             font-size: 0.85rem;
             padding: 0.35rem 0.75rem;
         }
-        
+
         .section-title {
             color: var(--primary-color);
             border-bottom: 2px solid #e1e4e8;
             padding-bottom: 0.5rem;
             margin-bottom: 1.5rem;
         }
-        
+
         footer {
             background: var(--primary-color);
             color: white;
             padding: 2rem 0;
             margin-top: 3rem;
         }
-        
+
         .stats-badge {
             background: rgba(255,255,255,0.1);
             padding: 0.5rem 1rem;
             border-radius: 6px;
             margin-right: 0.5rem;
+        }
+
+        /* ── Category tags on cards ── */
+        .tag {
+            display: inline-block;
+            padding: 1px 8px;
+            border-radius: 10px;
+            font-size: 0.68rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            border: 1px solid;
+        }
+        .tag-game       { background: #fff5f5; border-color: #feb2b2; color: #c53030; }
+        .tag-ai         { background: #ebf8ff; border-color: #90cdf4; color: #2b6cb0; }
+        .tag-tool       { background: #f0fff4; border-color: #9ae6b4; color: #276749; }
+        .tag-chat       { background: #faf5ff; border-color: #d6bcfa; color: #6b46c1; }
+        .tag-media      { background: #fffff0; border-color: #fefcbf; color: #975a16; }
+        .tag-simulation { background: #fff5f7; border-color: #fed7e2; color: #97266d; }
+        .tag-dev        { background: #f7fafc; border-color: #cbd5e0; color: #4a5568; }
+
+        .tags-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+
+        /* ── Filter bar ── */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-btn {
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            border: 1px solid #d1d5db;
+            background: white;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .filter-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+        .filter-btn.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: white;
+        }
+
+        /* ── Fade in/out for filtering ── */
+        .project-col {
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .project-col.hidden {
+            display: none !important;
         }
     </style>
 </head>
@@ -132,7 +194,7 @@
                     <h1 class="display-5 fw-bold mb-2">Chirag Patnaik</h1>
                     <h4 class="text-white-50 mb-3"><a href="https://github.com/NakliTechie" class="text-white-50 text-decoration-none" target="_blank">@NakliTechie</a></h4>
                     <p class="bio-text mb-3">
-                        I work at the intersection of marketing, communications, technology & politics. 
+                        I work at the intersection of marketing, communications, technology & politics.
                         My experience over the last 2 decades has spanned media and technology firms.
                     </p>
                     <div class="d-flex flex-wrap gap-2">
@@ -154,13 +216,13 @@
             <div class="col-lg-8 mx-auto">
                 <h2 class="section-title">Welcome to My Project Portfolio</h2>
                 <p class="lead">
-                    This is a collection of my open-source projects, experiments, and tools built over the years. 
-                    Most of these are browser-based applications that run entirely client-side, emphasizing privacy 
+                    This is a collection of my open-source projects, experiments, and tools built over the years.
+                    Most of these are browser-based applications that run entirely client-side, emphasizing privacy
                     and zero server dependencies.
                 </p>
                 <p>
-                    You'll find everything from games (3D Tic-Tac-Toe, Chess, Checkers) to productivity tools 
-                    (voice transcription, code snippets, document processors). All projects are built with 
+                    You'll find everything from games (Go, Chess, Checkers, 3D Tic-Tac-Toe) to productivity tools
+                    (voice transcription, code snippets, document processors). All projects are built with
                     modern web technologies and are available for you to explore, fork, and contribute to.
                 </p>
             </div>
@@ -170,6 +232,7 @@
     <!-- Projects Section -->
     <section class="container mb-5">
         <h2 class="section-title"><i class="bi bi-collection"></i> Projects</h2>
+        <div class="filter-bar" id="filter-bar"></div>
         <div class="row g-4" id="projects-grid">
             <!-- Projects will be loaded here -->
         </div>
@@ -189,120 +252,163 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // ── Tag definitions ──
+        const TAG_CLASSES = {
+            game:       'tag-game',
+            ai:         'tag-ai',
+            tool:       'tag-tool',
+            chat:       'tag-chat',
+            media:      'tag-media',
+            simulation: 'tag-simulation',
+            dev:        'tag-dev'
+        };
+
+        const TAG_LABELS = {
+            game:       'Game',
+            ai:         'AI',
+            tool:       'Tool',
+            chat:       'Chat',
+            media:      'Media',
+            simulation: 'Simulation',
+            dev:        'Dev'
+        };
+
+        // ── Projects — ordered by last updated (most recent first) ──
         const projects = [
-            // ── Browser-native series (reverse chronological) ──
             {
-                name: "BlurLocal",
-                repo: "blurlocal",
-                description: "Face blur — detect and blur faces in photos and videos with MediaPipe, gaussian & pixelate modes",
+                name: "KoLocal",
+                repo: "KoLocal",
+                description: "Go (Baduk) vs MCTS AI &mdash; fast numeric playout engine, 9&times;9/13&times;13/19&times;19, zero dependencies",
                 language: "HTML",
                 private: false,
-                homepage: "https://naklitechie.github.io/blurlocal/"
+                homepage: "https://naklitechie.github.io/KoLocal/",
+                tags: ["game", "ai"]
             },
             {
                 name: "LocalMind",
                 repo: "LocalMind",
-                description: "Private AI chatbot — Gemma 3/4 running entirely in your browser via WebGPU. No server, no API keys",
+                description: "Private AI chatbot &mdash; Gemma 3/4 running entirely in your browser via WebGPU. No server, no API keys",
                 language: "HTML",
                 private: false,
-                homepage: "https://naklitechie.github.io/LocalMind/"
+                homepage: "https://naklitechie.github.io/LocalMind/",
+                tags: ["ai", "chat"]
             },
             {
-                name: "ScanLocal",
-                repo: "ScanLocal",
-                description: "In-browser OCR — extract text from images and PDFs, fully private and local",
+                name: "BlurLocal",
+                repo: "blurlocal",
+                description: "Face blur &mdash; detect and blur faces in photos and videos with MediaPipe, gaussian &amp; pixelate modes",
                 language: "HTML",
                 private: false,
-                homepage: "https://naklitechie.github.io/ScanLocal/"
-            },
-            {
-                name: "Prediction Market",
-                repo: "PredictionMarket",
-                description: "Educational prediction market simulator — Parimutuel + LMSR markets, 4-player demo mode",
-                language: "HTML",
-                private: false,
-                homepage: "https://naklitechie.github.io/PredictionMarket/"
-            },
-            {
-                name: "SnipLocal",
-                repo: "SnipLocal",
-                description: "Background remover — RMBG-1.4, passport photo mode, edge softening, no uploads",
-                language: "HTML",
-                private: false,
-                homepage: "https://naklitechie.github.io/SnipLocal/"
-            },
-            {
-                name: "KingMe",
-                repo: "KingMe",
-                description: "English draughts/checkers vs minimax AI — custom SVG board, correspondence mode, zero dependencies",
-                language: "HTML",
-                private: false,
-                homepage: "https://naklitechie.github.io/KingMe/"
-            },
-            {
-                name: "VoiceVault",
-                repo: "VoiceVault",
-                description: "In-browser voice transcription — Whisper model, fully private and local after initial cache",
-                language: "HTML",
-                private: false,
-                homepage: "https://naklitechie.github.io/VoiceVault/"
-            },
-            {
-                name: "GambitLocal",
-                repo: "GambitLocal",
-                description: "In-browser chess vs Stockfish — correspondence mode via URL, no server side components",
-                language: "HTML",
-                private: false,
-                homepage: "https://naklitechie.github.io/GambitLocal/"
+                homepage: "https://naklitechie.github.io/blurlocal/",
+                tags: ["ai", "media", "tool"]
             },
             {
                 name: "StripLocal",
                 repo: "StripLocal",
-                description: "EXIF metadata stripper — drag-and-drop images, canvas re-encode, zero dependencies",
+                description: "EXIF metadata stripper &mdash; drag-and-drop images, canvas re-encode, zero dependencies",
                 language: "HTML",
                 private: false,
-                homepage: "https://naklitechie.github.io/StripLocal/"
+                homepage: "https://naklitechie.github.io/StripLocal/",
+                tags: ["tool", "media"]
+            },
+            {
+                name: "SnipLocal",
+                repo: "SnipLocal",
+                description: "Background remover &mdash; RMBG-1.4, passport photo mode, edge softening, no uploads",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklitechie.github.io/SnipLocal/",
+                tags: ["ai", "media", "tool"]
             },
             {
                 name: "BabelLocal",
                 repo: "BabelLocal",
-                description: "Universal translator — 55 languages, NLLB model via Transformers.js, fully in-browser",
+                description: "Universal translator &mdash; 55 languages, NLLB model via Transformers.js, fully in-browser",
                 language: "HTML",
                 private: false,
-                homepage: "https://naklitechie.github.io/BabelLocal/"
+                homepage: "https://naklitechie.github.io/BabelLocal/",
+                tags: ["ai", "tool"]
             },
-            // ── Games & experiments ──
             {
-                name: "Chokepoint",
-                repo: "chokepoint",
-                description: "Tower Defense game using maps from strait-command",
+                name: "VoiceVault",
+                repo: "VoiceVault",
+                description: "In-browser voice transcription &mdash; Whisper model, fully private and local after initial cache",
                 language: "HTML",
                 private: false,
-                homepage: "https://naklitechie.github.io/chokepoint/"
+                homepage: "https://naklitechie.github.io/VoiceVault/",
+                tags: ["ai", "media", "tool"]
             },
             {
                 name: "Strait Command",
                 repo: "strait-command",
-                description: "Clear the Hormuz Strait — strategy game",
+                description: "Clear the Hormuz Strait &mdash; strategy game",
                 language: "HTML",
                 private: false,
-                homepage: "https://naklitechie.github.io/strait-command/"
+                homepage: "https://naklitechie.github.io/strait-command/",
+                tags: ["game"]
             },
             {
-                name: "3D Tic-Tac-Toe",
-                repo: "3d-tic-tac-toe",
-                description: "3D Tic-Tac-Toe playable in the browser — Three.js, vs AI or 2-player",
+                name: "Chokepoint",
+                repo: "chokepoint",
+                description: "Maritime tower defense &mdash; hold the strait",
                 language: "HTML",
                 private: false,
-                homepage: "https://naklitechie.github.io/3d-tic-tac-toe/"
+                homepage: "https://naklitechie.github.io/chokepoint/",
+                tags: ["game"]
             },
             {
                 name: "Clacker",
                 repo: "Clacker",
-                description: "No-dependency flipboard for your screen",
+                description: "No-dependency split-flap display for your screen",
                 language: "HTML",
                 private: false,
-                homepage: "https://naklitechie.github.io/Clacker/"
+                homepage: "https://naklitechie.github.io/Clacker/",
+                tags: ["tool"]
+            },
+            {
+                name: "KingMe",
+                repo: "KingMe",
+                description: "English draughts/checkers vs minimax AI &mdash; custom SVG board, correspondence mode, zero dependencies",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklitechie.github.io/KingMe/",
+                tags: ["game", "ai"]
+            },
+            {
+                name: "GambitLocal",
+                repo: "GambitLocal",
+                description: "In-browser chess vs Stockfish &mdash; correspondence mode via URL, no server side components",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklitechie.github.io/GambitLocal/",
+                tags: ["game", "ai"]
+            },
+            {
+                name: "3D Tic-Tac-Toe",
+                repo: "3d-tic-tac-toe",
+                description: "3D Tic-Tac-Toe playable in the browser &mdash; Three.js, vs AI or 2-player",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklitechie.github.io/3d-tic-tac-toe/",
+                tags: ["game", "ai"]
+            },
+            {
+                name: "ScanLocal",
+                repo: "ScanLocal",
+                description: "In-browser OCR &mdash; extract text from images and PDFs, fully private and local",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklitechie.github.io/ScanLocal/",
+                tags: ["ai", "tool"]
+            },
+            {
+                name: "Prediction Market",
+                repo: "PredictionMarket",
+                description: "Educational prediction market simulator &mdash; Parimutuel + LMSR markets, 4-player demo mode",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklitechie.github.io/PredictionMarket/",
+                tags: ["simulation"]
             },
             {
                 name: "Vampire Hunter",
@@ -310,24 +416,26 @@
                 description: "Vampire Hunter game/project",
                 language: "Python",
                 private: false,
-                homepage: null
+                homepage: null,
+                tags: ["game"]
             },
-            // ── Tools & utilities ──
             {
                 name: "GPU Programming",
                 repo: "GPU-Programming",
                 description: "GPU programming projects and experiments",
                 language: "CUDA",
                 private: false,
-                homepage: null
+                homepage: null,
+                tags: ["dev"]
             },
             {
                 name: "Sorting Barrier Benchmark",
                 repo: "SortingBarrierBenchmark",
-                description: "A Python implementation and benchmark of the 'Breaking the Sorting Barrier' SSSP algorithm against Dijkstra's, using OpenStreetMap data",
+                description: "Benchmark of the 'Breaking the Sorting Barrier' SSSP algorithm against Dijkstra's, using OpenStreetMap data",
                 language: "Python",
                 private: false,
-                homepage: null
+                homepage: null,
+                tags: ["dev"]
             },
             {
                 name: "PineScript Coder",
@@ -335,7 +443,8 @@
                 description: "PineScript coding resources and tools",
                 language: "HTML",
                 private: false,
-                homepage: null
+                homepage: null,
+                tags: ["dev", "tool"]
             },
             {
                 name: "Qwen Backup",
@@ -343,41 +452,91 @@
                 description: "CLI instructions and shell scripts to maintain local backups",
                 language: "Shell",
                 private: false,
-                homepage: null
+                homepage: null,
+                tags: ["dev", "tool"]
             },
-
             {
                 name: "Prompts",
                 repo: "prompts",
                 description: "Collection of AI/LLM prompts",
                 language: null,
                 private: false,
-                homepage: null
+                homepage: null,
+                tags: ["ai"]
             }
         ];
+
+        // ── Active filter state ──
+        let activeFilter = null;
+
+        // ── Build filter bar ──
+        function renderFilterBar() {
+            const bar = document.getElementById('filter-bar');
+            // Collect all tags in use
+            const tagCounts = {};
+            projects.forEach(p => (p.tags || []).forEach(t => { tagCounts[t] = (tagCounts[t] || 0) + 1; }));
+
+            let html = '<button class="filter-btn active" data-tag="all">All</button>';
+            // Sort by count descending
+            Object.entries(tagCounts)
+                .sort((a, b) => b[1] - a[1])
+                .forEach(([tag, count]) => {
+                    html += `<button class="filter-btn" data-tag="${tag}">${TAG_LABELS[tag] || tag} <span style="opacity:0.6">${count}</span></button>`;
+                });
+            bar.innerHTML = html;
+
+            bar.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    bar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    activeFilter = btn.dataset.tag === 'all' ? null : btn.dataset.tag;
+                    applyFilter();
+                });
+            });
+        }
+
+        function applyFilter() {
+            document.querySelectorAll('.project-col').forEach(col => {
+                if (!activeFilter) {
+                    col.classList.remove('hidden');
+                } else {
+                    const tags = col.dataset.tags ? col.dataset.tags.split(',') : [];
+                    col.classList.toggle('hidden', !tags.includes(activeFilter));
+                }
+            });
+        }
 
         function renderProjects() {
             const grid = document.getElementById('projects-grid');
             let html = '';
-            
+
             projects.forEach(project => {
-                const tryLink = project.homepage ? 
+                const tryLink = project.homepage ?
                     `<a href="${project.homepage}" class="btn btn-success btn-gh" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Try</a>` : '';
-                
-                const languageBadge = project.language ? 
+
+                const languageBadge = project.language ?
                     `<span class="language-badge"><i class="bi bi-circle-fill" style="font-size: 0.5rem; vertical-align: middle;"></i> ${project.language}</span>` : '';
-                
-                const privateBadge = project.private ? 
+
+                const privateBadge = project.private ?
                     '<span class="language-badge private-badge"><i class="bi bi-lock-fill"></i> Private</span>' : '';
-                
+
+                const tagsHtml = (project.tags || []).map(t =>
+                    `<span class="tag ${TAG_CLASSES[t] || ''}">${TAG_LABELS[t] || t}</span>`
+                ).join('');
+
+                const tagsData = (project.tags || []).join(',');
+
                 html += `
-                    <div class="col-md-6 col-lg-4">
+                    <div class="col-md-6 col-lg-4 project-col" data-tags="${tagsData}">
                         <div class="project-card p-4 d-flex flex-column">
                             <h5>
                                 <a href="https://github.com/NakliTechie/${project.repo}" target="_blank">
                                     <i class="bi bi-repo"></i> ${project.name}
                                 </a>
                             </h5>
+                            <div class="tags-wrap">
+                                ${tagsHtml}
+                            </div>
                             <div class="mb-2">
                                 ${languageBadge}
                                 ${privateBadge}
@@ -393,12 +552,15 @@
                     </div>
                 `;
             });
-            
+
             grid.innerHTML = html;
         }
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', renderProjects);
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProjects();
+            renderFilterBar();
+        });
     </script>
 </body>
 </html>
