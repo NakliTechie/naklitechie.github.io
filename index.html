@@ -544,14 +544,18 @@
 
                 const tagsData = (project.tags || []).join(',');
 
+                const repoLink = project.private
+                    ? `<i class="bi bi-repo"></i> ${project.name}`
+                    : `<a href="https://github.com/NakliTechie/${project.repo}"><i class="bi bi-repo"></i> ${project.name}</a>`;
+
+                const viewRepoBtn = project.private
+                    ? ''
+                    : `<a href="https://github.com/NakliTechie/${project.repo}" class="btn btn-outline-primary btn-gh"><i class="bi bi-github"></i> View Repo</a>`;
+
                 html += `
                     <div class="col-md-6 col-lg-4 project-col" data-tags="${tagsData}">
                         <div class="project-card p-4 d-flex flex-column">
-                            <h5>
-                                <a href="https://github.com/NakliTechie/${project.repo}">
-                                    <i class="bi bi-repo"></i> ${project.name}
-                                </a>
-                            </h5>
+                            <h5>${repoLink}</h5>
                             <div class="tags-wrap">
                                 ${tagsHtml}
                             </div>
@@ -561,9 +565,7 @@
                             </div>
                             <p class="project-description flex-grow-1">${project.description || 'No description provided'}</p>
                             <div class="card-actions">
-                                <a href="https://github.com/NakliTechie/${project.repo}" class="btn btn-outline-primary btn-gh">
-                                    <i class="bi bi-github"></i> View Repo
-                                </a>
+                                ${viewRepoBtn}
                                 ${tryLink}
                             </div>
                         </div>
