@@ -171,7 +171,21 @@
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
+            margin-bottom: 0.75rem;
+        }
+
+        .sort-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
             margin-bottom: 1.5rem;
+            font-size: 0.82rem;
+            color: #6b7280;
+        }
+        .sort-bar .sort-label {
+            font-weight: 500;
+            margin-right: 2px;
         }
 
         .filter-btn {
@@ -255,6 +269,7 @@
     <section class="container mb-5">
         <h2 class="section-title"><i class="bi bi-collection"></i> Projects</h2>
         <div class="filter-bar" id="filter-bar"></div>
+        <div class="sort-bar" id="sort-bar"></div>
         <div class="row g-4" id="projects-grid">
             <!-- Projects will be loaded here -->
         </div>
@@ -300,6 +315,8 @@
             {
                 name: "Rangrez",
                 repo: "rangrez",
+                created: "2026-04-09",
+                updated: "2026-04-09",
                 description: "Palette library of culturally-grounded color &mdash; each palette named after a tradition, place, craft, or moment, with the story behind why those colors belong together. Search by name, story, country, or hex; click to copy; JSON export. Dual-licensed: MIT scaffolding, CC BY-SA 4.0 content. Sibling to Kagaz",
                 language: "HTML",
                 private: false,
@@ -309,6 +326,8 @@
             {
                 name: "Bahi",
                 repo: "bahi",
+                created: "2026-04-07",
+                updated: "2026-04-08",
                 description: "Browser-native accounting for Indian SMBs &mdash; full Tally / Zoho Books alternative as a single ~800 KB HTML file (~170 KB gzipped). Books live in a <code>.khata</code> file on your own disk. Freelancer / Service / Goods SMB tiers (customers, vendors, invoices across 5 series, payments, advances, credit/debit notes, journal vouchers, inventory with WAC + FIFO + batches, godowns, e-way bills, inter-GSTIN stock transfers). Tally XML importer (Prime + ERP 9). CA mode (multi-client workspace, annotations, review markers, PDF review report, Layer 3 ancestry check + Reconciliation View). Full reports (Trial Balance, Balance Sheet, Day Book, Account Ledger, Sales/Purchase Register, P&amp;L, GSTR-1, GSTR-3B, CMP-08, FY rollover, period locks, tax challans). Append-only audit log with SHA-256 chain + ECDSA signatures, 8-invariant historical integrity, OPFS atomic-write staging for crash recovery, optimistic concurrency check, snapshot pattern, Tally keyboard parity, dark mode, undo via counter-entry, Backup Now polish. Open <code>.khata</code> format published as a spec",
                 language: "HTML",
                 private: false,
@@ -318,6 +337,8 @@
             {
                 name: "BOFH",
                 repo: "BOFH",
+                created: "2026-04-06",
+                updated: "2026-04-07",
                 description: "Browser-native dev toolkit &mdash; single HTML file, 20 modules: JSON / JWT / Hash / Base64 / URL / Regex / Keys / Diff / YAML / Markdown / CSV / SQL / Log Viewer / Timestamp / UUID / Color / IP-Subnet / Cron / HTTP Status / User Agent. Stop pasting your secrets into random websites &mdash; everything runs locally",
                 language: "HTML",
                 private: false,
@@ -327,6 +348,8 @@
             {
                 name: "Nemawashi",
                 repo: "Nemawashi",
+                created: "2026-04-06",
+                updated: "2026-04-07",
                 description: "Multi-axis group consensus &mdash; single-file decision tool. Define axes (dates, location, hotel&hellip;), participants score each option (Block/Okay/Like/Love), the tool finds the combination that maximises group satisfaction. Event and responses both travel as clickable URL links through the group chat &mdash; the chat is the transport layer",
                 language: "HTML",
                 private: false,
@@ -336,6 +359,8 @@
             {
                 name: "KanZen",
                 repo: "KanZen",
+                created: "2026-04-06",
+                updated: "2026-04-06",
                 description: "Kanban without the noise &mdash; single-file local-first Trello alternative. Boards as plain JSON files (FS API), encrypted URL sharing, snapshots with diff, undo/redo, list/calendar views, Trello import",
                 language: "HTML",
                 private: false,
@@ -345,6 +370,8 @@
             {
                 name: "NakliPoster",
                 repo: "NakliPoster",
+                created: "2026-04-05",
+                updated: "2026-04-06",
                 description: "Local-first API client &mdash; no account, no cloud. Collections as plain JSON files, WebSocket client, global search, encrypted link sharing, AI assistant (WebGPU + API)",
                 language: "HTML",
                 private: false,
@@ -354,6 +381,8 @@
             {
                 name: "Hue & Cry",
                 repo: "hueandcry",
+                created: "2026-04-04",
+                updated: "2026-04-05",
                 description: "Colour styling &mdash; photograph a garment, match to Sanzo Wada's 1930s palette (158 colours), discover 348 classic combinations",
                 language: "HTML",
                 private: true,
@@ -363,6 +392,8 @@
             {
                 name: "VaultMind",
                 repo: "VaultMind",
+                created: "2026-04-05",
+                updated: "2026-04-05",
                 description: "Obsidian vault explorer &mdash; force graph, full-text search, AI chat (WebGPU + API), in-place markdown editor, semantic audit",
                 language: "HTML",
                 private: false,
@@ -372,6 +403,8 @@
             {
                 name: "KoLocal",
                 repo: "KoLocal",
+                created: "2026-04-03",
+                updated: "2026-04-03",
                 description: "Go (Baduk) vs MCTS AI &mdash; fast numeric playout engine, 9&times;9/13&times;13/19&times;19, zero dependencies",
                 language: "HTML",
                 private: false,
@@ -381,6 +414,8 @@
             {
                 name: "LocalMind",
                 repo: "LocalMind",
+                created: "2026-04-03",
+                updated: "2026-04-09",
                 description: "Private AI research agent &mdash; 9 tools, RAG memory, web search, PDF/DOCX ingestion, multimodal. Gemma 4 via WebGPU, zero backend",
                 language: "HTML",
                 private: false,
@@ -390,6 +425,8 @@
             {
                 name: "BlurLocal",
                 repo: "blurlocal",
+                created: "2026-04-03",
+                updated: "2026-04-03",
                 description: "Face blur &mdash; detect and blur faces in photos and videos with MediaPipe, gaussian &amp; pixelate modes",
                 language: "HTML",
                 private: false,
@@ -399,6 +436,8 @@
             {
                 name: "StripLocal",
                 repo: "StripLocal",
+                created: "2026-03-18",
+                updated: "2026-04-01",
                 description: "EXIF metadata stripper &mdash; drag-and-drop images, canvas re-encode, zero dependencies",
                 language: "HTML",
                 private: false,
@@ -408,6 +447,8 @@
             {
                 name: "SnipLocal",
                 repo: "SnipLocal",
+                created: "2026-03-19",
+                updated: "2026-04-01",
                 description: "Background remover &mdash; RMBG-1.4, passport photo mode, edge softening, no uploads",
                 language: "HTML",
                 private: false,
@@ -417,6 +458,8 @@
             {
                 name: "BabelLocal",
                 repo: "BabelLocal",
+                created: "2026-03-18",
+                updated: "2026-04-01",
                 description: "Universal translator &mdash; 55 languages, NLLB model via Transformers.js, fully in-browser",
                 language: "HTML",
                 private: false,
@@ -426,6 +469,8 @@
             {
                 name: "VoiceVault",
                 repo: "VoiceVault",
+                created: "2026-03-18",
+                updated: "2026-04-01",
                 description: "In-browser voice transcription &mdash; Whisper model, fully private and local after initial cache",
                 language: "HTML",
                 private: false,
@@ -435,6 +480,8 @@
             {
                 name: "Strait Command",
                 repo: "strait-command",
+                created: "2026-03-17",
+                updated: "2026-04-01",
                 description: "Clear the Hormuz Strait &mdash; strategy game",
                 language: "HTML",
                 private: false,
@@ -444,6 +491,8 @@
             {
                 name: "Chokepoint",
                 repo: "chokepoint",
+                created: "2026-03-21",
+                updated: "2026-04-01",
                 description: "Maritime tower defense &mdash; hold the strait",
                 language: "HTML",
                 private: false,
@@ -453,6 +502,8 @@
             {
                 name: "Clacker",
                 repo: "Clacker",
+                created: "2026-03-26",
+                updated: "2026-04-01",
                 description: "No-dependency split-flap display for your screen",
                 language: "HTML",
                 private: false,
@@ -462,6 +513,8 @@
             {
                 name: "KingMe",
                 repo: "KingMe",
+                created: "2026-03-18",
+                updated: "2026-04-01",
                 description: "English draughts/checkers vs minimax AI &mdash; custom SVG board, correspondence mode, zero dependencies",
                 language: "HTML",
                 private: false,
@@ -471,6 +524,8 @@
             {
                 name: "GambitLocal",
                 repo: "GambitLocal",
+                created: "2026-03-18",
+                updated: "2026-04-01",
                 description: "In-browser chess vs Stockfish &mdash; correspondence mode via URL, no server side components",
                 language: "HTML",
                 private: false,
@@ -480,6 +535,8 @@
             {
                 name: "3D Tic-Tac-Toe",
                 repo: "3d-tic-tac-toe",
+                created: "2026-03-09",
+                updated: "2026-04-01",
                 description: "3D Tic-Tac-Toe playable in the browser &mdash; Three.js, vs AI or 2-player",
                 language: "HTML",
                 private: false,
@@ -489,6 +546,8 @@
             {
                 name: "ScanLocal",
                 repo: "ScanLocal",
+                created: "2026-03-28",
+                updated: "2026-03-29",
                 description: "In-browser OCR &mdash; extract text from images and PDFs, fully private and local",
                 language: "HTML",
                 private: false,
@@ -498,6 +557,8 @@
             {
                 name: "Prediction Market",
                 repo: "PredictionMarket",
+                created: "2026-03-19",
+                updated: "2026-03-26",
                 description: "Educational prediction market simulator &mdash; Parimutuel + LMSR markets, 4-player demo mode",
                 language: "HTML",
                 private: false,
@@ -507,6 +568,8 @@
             {
                 name: "Vampire Hunter",
                 repo: "VampireHunter",
+                created: "2025-09-17",
+                updated: "2025-10-16",
                 description: "Vampire Hunter game/project",
                 language: "Python",
                 private: false,
@@ -516,6 +579,8 @@
             {
                 name: "GPU Programming",
                 repo: "GPU-Programming",
+                created: "2025-10-19",
+                updated: "2025-10-23",
                 description: "GPU programming projects and experiments",
                 language: "CUDA",
                 private: false,
@@ -525,6 +590,8 @@
             {
                 name: "Sorting Barrier Benchmark",
                 repo: "SortingBarrierBenchmark",
+                created: "2025-08-14",
+                updated: "2025-08-14",
                 description: "Benchmark of the 'Breaking the Sorting Barrier' SSSP algorithm against Dijkstra's, using OpenStreetMap data",
                 language: "Python",
                 private: false,
@@ -534,6 +601,8 @@
             {
                 name: "PineScript Coder",
                 repo: "PineScriptCoder",
+                created: "2025-09-19",
+                updated: "2025-09-19",
                 description: "PineScript coding resources and tools",
                 language: "HTML",
                 private: false,
@@ -543,6 +612,8 @@
             {
                 name: "Qwen Backup",
                 repo: "qwen-backup",
+                created: "2025-09-02",
+                updated: "2025-09-02",
                 description: "CLI instructions and shell scripts to maintain local backups",
                 language: "Shell",
                 private: false,
@@ -552,6 +623,8 @@
             {
                 name: "Prompts",
                 repo: "prompts",
+                created: "2025-10-30",
+                updated: "2026-02-08",
                 description: "Collection of AI/LLM prompts",
                 language: null,
                 private: false,
@@ -560,8 +633,59 @@
             }
         ];
 
-        // ── Active filter state ──
+        // ── Active filter / sort state ──
         let activeFilter = null;
+        // sort key: 'updated' | 'created' | 'name'; dir: 'desc' | 'asc'
+        let sortKey = 'updated';
+        let sortDir = 'desc';
+
+        const SORT_OPTIONS = [
+            { key: 'updated', label: 'Last updated', defaultDir: 'desc' },
+            { key: 'created', label: 'First commit', defaultDir: 'desc' },
+            { key: 'name',    label: 'Name',         defaultDir: 'asc'  },
+        ];
+
+        function compareProjects(a, b) {
+            let av, bv;
+            if (sortKey === 'name') {
+                av = (a.name || '').toLowerCase();
+                bv = (b.name || '').toLowerCase();
+            } else {
+                // 'created' or 'updated' — ISO date strings sort lexicographically
+                av = a[sortKey] || '';
+                bv = b[sortKey] || '';
+            }
+            if (av < bv) return sortDir === 'asc' ? -1 : 1;
+            if (av > bv) return sortDir === 'asc' ? 1 : -1;
+            return 0;
+        }
+
+        function renderSortBar() {
+            const bar = document.getElementById('sort-bar');
+            let html = '<span class="sort-label">Sort:</span>';
+            SORT_OPTIONS.forEach(opt => {
+                const active = opt.key === sortKey;
+                const arrow = active ? (sortDir === 'asc' ? ' ↑' : ' ↓') : '';
+                html += `<button class="filter-btn${active ? ' active' : ''}" data-sort="${opt.key}">${opt.label}${arrow}</button>`;
+            });
+            bar.innerHTML = html;
+
+            bar.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const key = btn.dataset.sort;
+                    if (key === sortKey) {
+                        // toggle direction
+                        sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+                    } else {
+                        sortKey = key;
+                        sortDir = (SORT_OPTIONS.find(o => o.key === key) || {}).defaultDir || 'desc';
+                    }
+                    renderSortBar();
+                    renderProjects();
+                    applyFilter();
+                });
+            });
+        }
 
         // ── Build filter bar ──
         function renderFilterBar() {
@@ -604,7 +728,8 @@
             const grid = document.getElementById('projects-grid');
             let html = '';
 
-            projects.forEach(project => {
+            const ordered = projects.slice().sort(compareProjects);
+            ordered.forEach(project => {
                 const tryLink = project.homepage ?
                     `<a href="${project.homepage}" class="btn btn-success btn-gh"><i class="bi bi-box-arrow-up-right"></i> Try</a>` : '';
 
@@ -656,6 +781,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderProjects();
             renderFilterBar();
+            renderSortBar();
         });
     </script>
 </body>
