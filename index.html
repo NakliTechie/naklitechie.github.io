@@ -4,6 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chirag Patnaik | NakliTechie</title>
+    <meta name="author" content="Chirag Patnaik">
+    <meta name="description" content="Browser-native, local-first web apps by Chirag Patnaik (@NakliTechie). No server, no API keys, no data leaving your device.">
+    <link rel="canonical" href="https://naklitechie.github.io/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="NakliTechie">
+    <meta property="og:title" content="Chirag Patnaik | NakliTechie">
+    <meta property="og:description" content="Browser-native, local-first web apps. No server, no API keys, no data leaving your device.">
+    <meta property="og:url" content="https://naklitechie.github.io/">
+    <meta property="og:image" content="https://naklitechie.github.io/og-cover.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="The Nakli Techie Manifesto">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Chirag Patnaik | NakliTechie">
+    <meta name="twitter:description" content="Browser-native, local-first web apps. No server, no API keys, no data leaving your device.">
+    <meta name="twitter:image" content="https://naklitechie.github.io/og-cover.png">
+    <meta name="twitter:image:alt" content="The Nakli Techie Manifesto">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
@@ -275,6 +297,24 @@
 
         // ── Projects — ordered by last updated (most recent first) ──
         const projects = [
+            {
+                name: "Rangrez",
+                repo: "rangrez",
+                description: "Palette library of culturally-grounded color &mdash; each palette named after a tradition, place, craft, or moment, with the story behind why those colors belong together. Search by name, story, country, or hex; click to copy; JSON export. Dual-licensed: MIT scaffolding, CC BY-SA 4.0 content. Sibling to Kagaz",
+                language: "HTML",
+                private: false,
+                homepage: "https://rangrez.naklitechie.com",
+                tags: ["tool", "design"]
+            },
+            {
+                name: "Bahi",
+                repo: "bahi",
+                description: "Browser-native accounting for Indian SMBs &mdash; full Tally / Zoho Books alternative as a single ~800 KB HTML file (~170 KB gzipped). Books live in a <code>.khata</code> file on your own disk. Freelancer / Service / Goods SMB tiers (customers, vendors, invoices across 5 series, payments, advances, credit/debit notes, journal vouchers, inventory with WAC + FIFO + batches, godowns, e-way bills, inter-GSTIN stock transfers). Tally XML importer (Prime + ERP 9). CA mode (multi-client workspace, annotations, review markers, PDF review report, Layer 3 ancestry check + Reconciliation View). Full reports (Trial Balance, Balance Sheet, Day Book, Account Ledger, Sales/Purchase Register, P&amp;L, GSTR-1, GSTR-3B, CMP-08, FY rollover, period locks, tax challans). Append-only audit log with SHA-256 chain + ECDSA signatures, 8-invariant historical integrity, OPFS atomic-write staging for crash recovery, optimistic concurrency check, snapshot pattern, Tally keyboard parity, dark mode, undo via counter-entry, Backup Now polish. Open <code>.khata</code> format published as a spec",
+                language: "HTML",
+                private: false,
+                homepage: "https://bahi.naklitechie.com",
+                tags: ["tool", "accounting", "india"]
+            },
             {
                 name: "BOFH",
                 repo: "BOFH",
