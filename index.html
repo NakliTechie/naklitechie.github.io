@@ -236,9 +236,15 @@
                     <div class="d-flex flex-wrap gap-2">
                         <span class="stats-badge"><i class="bi bi-repo"></i> 22 Repos</span>
                     </div>
-                    <div class="mt-3">
+                    <div class="mt-3 d-flex flex-wrap gap-3">
+                        <a href="https://naklitechie.github.io/" class="text-white">
+                            <i class="bi bi-collection"></i> All Projects
+                        </a>
                         <a href="http://www.chiragpatnaik.com" class="text-white">
                             <i class="bi bi-globe"></i> chiragpatnaik.com
+                        </a>
+                        <a href="https://naklitechie.com" class="text-white">
+                            <i class="bi bi-globe2"></i> naklitechie.com
                         </a>
                     </div>
                 </div>
@@ -250,16 +256,15 @@
     <section class="container mb-5">
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <h2 class="section-title">Welcome to My Project Portfolio</h2>
+                <h2 class="section-title">What I've Been Building</h2>
                 <p class="lead">
-                    This is a collection of my open-source projects, experiments, and tools built over the years.
-                    Most of these are browser-based applications that run entirely client-side, emphasizing privacy
-                    and zero server dependencies.
+                    Single-file web apps that run entirely in your browser &mdash; no accounts, no servers, no data leaving your device.
                 </p>
                 <p>
-                    You'll find everything from games (Go, Chess, Checkers, 3D Tic-Tac-Toe) to productivity tools
-                    (voice transcription, code snippets, document processors). All projects are built with
-                    modern web technologies and are available for you to explore, fork, and contribute to.
+                    The latest batch includes encrypted team chat, a full accounting suite for Indian SMBs,
+                    a personal site builder, a TOTP authenticator, and a dev toolkit &mdash; all as single HTML files.
+                    Older projects cover AI tools (translation, transcription, research agents),
+                    board games, and media utilities. Everything is open source.
                 </p>
             </div>
         </div>
@@ -317,7 +322,7 @@
                 repo: "mehfil",
                 created: "2026-04-10",
                 updated: "2026-04-10",
-                description: "Browser-native, local-first team chat &mdash; single HTML file, no accounts, no central server. End-to-end encrypted (Ed25519 + X25519 + AES-256-GCM), multi-peer gossip mesh, causal delivery, Yjs workspace CRDT, search, member admin, Cloudflare relay, and LAN bridge. 8 slices shipped, ~9,500 lines of vanilla JS",
+                description: "Encrypted team chat in a single HTML file. No accounts, no central server &mdash; messages stay between you and your group.",
                 language: "HTML",
                 private: false,
                 homepage: "https://naklitechie.github.io/mehfil/",
@@ -328,7 +333,7 @@
                 repo: "dotspin",
                 created: "2026-04-10",
                 updated: "2026-04-10",
-                description: "15 dot-matrix CSS spinners &mdash; one element each, zero JS, zero dependencies. Uses a single <code>&lt;i&gt;</code> with <code>::before</code> + <code>box-shadow</code> keyframes on an invisible 5&times;5 grid. Inherits <code>currentColor</code>, scales via <code>--dotspin-size</code>, respects <code>prefers-reduced-motion</code>. Drop in the CSS file and you&#8217;re done",
+                description: "15 dot-matrix CSS spinners. One element each, zero JS, zero dependencies &mdash; drop in the CSS file and go.",
                 language: "CSS",
                 private: false,
                 homepage: "https://naklitechie.github.io/dotspin/",
@@ -339,7 +344,7 @@
                 repo: "kagaz",
                 created: "2026-04-09",
                 updated: "2026-04-10",
-                description: "काग़ज़ &mdash; <em>paper</em>. Browser-native personal site builder, one HTML file, no accounts, no servers. 15 layouts &times; 240 culturally-grounded palettes &times; 8 typographies &times; 57 curated combinations. Full editor: Choose screen, Fill form (images, lists, links), axis pickers, live preview, localStorage autosave, <code>.kagaz</code> save and static-site export. All content stays on your device. Sibling to Rangrez",
+                description: "Personal site builder &mdash; pick a layout, fill in your content, export a ready-to-host static site. No accounts, no servers.",
                 language: "HTML",
                 private: false,
                 homepage: "https://kagaz.naklitechie.com",
@@ -350,7 +355,7 @@
                 repo: "rotor",
                 created: "2026-04-09",
                 updated: "2026-04-09",
-                description: "A TOTP authenticator in one HTML file &mdash; the kind that shows rotating 6-digit codes for two-factor login. No account, no cloud, no sync, no server. AES-256-GCM vault derived from a passphrase via PBKDF2-SHA256 (600k), stored only in IndexedDB. Add accounts via manual entry, pasted <code>otpauth://</code> URI, multi-line paste, QR scan (jsQR inlined), or <code>otpauth-migration://</code> batch import (hand-rolled protobuf walker). Encrypted <code>.rotor</code> backup with a documented OpenSSL recovery path &mdash; Rotor is never the only thing between you and your secrets",
+                description: "TOTP authenticator in one HTML file. Encrypted vault, QR scan, bulk import from other apps, offline backup.",
                 language: "HTML",
                 private: false,
                 homepage: "https://rotor.naklitechie.com",
@@ -361,7 +366,7 @@
                 repo: "rangrez",
                 created: "2026-04-09",
                 updated: "2026-04-09",
-                description: "Palette library of culturally-grounded color &mdash; each palette named after a tradition, place, craft, or moment, with the story behind why those colors belong together. Search by name, story, country, or hex; click to copy; JSON export. Dual-licensed: MIT scaffolding, CC BY-SA 4.0 content. Sibling to Kagaz",
+                description: "Colour palette library &mdash; each palette named after a tradition, place, or craft, with the story behind the colours.",
                 language: "HTML",
                 private: false,
                 homepage: "https://rangrez.naklitechie.com",
@@ -372,7 +377,7 @@
                 repo: "bahi",
                 created: "2026-04-07",
                 updated: "2026-04-08",
-                description: "Browser-native accounting for Indian SMBs &mdash; a full Tally / Zoho Books alternative as a single HTML file, with books stored in a portable <code>.khata</code> file on your own disk. Freelancer / Service / Goods SMB tiers, Tally XML import, CA mode, full statutory reports (GSTR-1, GSTR-3B, P&amp;L, Balance Sheet) and a SHA-256 + ECDSA audit chain",
+                description: "Full accounting suite for Indian SMBs &mdash; Tally alternative as a single HTML file. GST reports, Tally import, CA mode.",
                 language: "HTML",
                 private: false,
                 homepage: "https://bahi.naklitechie.com",
@@ -383,7 +388,7 @@
                 repo: "BOFH",
                 created: "2026-04-06",
                 updated: "2026-04-07",
-                description: "Browser-native dev toolkit &mdash; single HTML file, 20 modules: JSON / JWT / Hash / Base64 / URL / Regex / Keys / Diff / YAML / Markdown / CSV / SQL / Log Viewer / Timestamp / UUID / Color / IP-Subnet / Cron / HTTP Status / User Agent. Stop pasting your secrets into random websites &mdash; everything runs locally",
+                description: "Dev toolkit with 20 modules &mdash; JSON, JWT, hashing, regex, diff, and more. Stop pasting your secrets into random websites.",
                 language: "HTML",
                 private: false,
                 homepage: "https://bofh.naklitechie.com",
@@ -394,7 +399,7 @@
                 repo: "Nemawashi",
                 created: "2026-04-06",
                 updated: "2026-04-07",
-                description: "Multi-axis group consensus &mdash; single-file decision tool. Define axes (dates, location, hotel&hellip;), participants score each option (Block/Okay/Like/Love), the tool finds the combination that maximises group satisfaction. Event and responses both travel as clickable URL links through the group chat &mdash; the chat is the transport layer",
+                description: "Group decision tool &mdash; define options, everyone scores, the best combination surfaces automatically. Shared via links in your group chat.",
                 language: "HTML",
                 private: false,
                 homepage: "https://nemawashi.naklitechie.com",
@@ -405,7 +410,7 @@
                 repo: "KanZen",
                 created: "2026-04-06",
                 updated: "2026-04-06",
-                description: "Kanban without the noise &mdash; single-file local-first Trello alternative. Boards as plain JSON files (FS API), encrypted URL sharing, snapshots with diff, undo/redo, list/calendar views, Trello import",
+                description: "Kanban boards without the noise &mdash; local-first Trello alternative. Plain JSON files, encrypted sharing, Trello import.",
                 language: "HTML",
                 private: false,
                 homepage: "https://kanzen.naklitechie.com",
@@ -416,7 +421,7 @@
                 repo: "NakliPoster",
                 created: "2026-04-05",
                 updated: "2026-04-06",
-                description: "Local-first API client &mdash; no account, no cloud. Collections as plain JSON files, WebSocket client, global search, encrypted link sharing, AI assistant (WebGPU + API)",
+                description: "Local-first API client &mdash; no account, no cloud. REST, GraphQL, WebSocket, collections as plain JSON files.",
                 language: "HTML",
                 private: false,
                 homepage: "https://nakliposter.naklitechie.com",
@@ -427,7 +432,7 @@
                 repo: "hueandcry",
                 created: "2026-04-04",
                 updated: "2026-04-05",
-                description: "Colour styling &mdash; photograph a garment, match to Sanzo Wada's 1930s palette (158 colours), discover 348 classic combinations",
+                description: "Photograph a garment, match its colours to classic palettes, discover combinations that work.",
                 language: "HTML",
                 private: true,
                 homepage: "https://hueandcry.naklitechie.com",
@@ -438,7 +443,7 @@
                 repo: "VaultMind",
                 created: "2026-04-05",
                 updated: "2026-04-05",
-                description: "Obsidian vault explorer &mdash; force graph, full-text search, AI chat (WebGPU + API), in-place markdown editor, semantic audit",
+                description: "Obsidian vault explorer &mdash; force graph, full-text search, AI chat, and in-place markdown editing.",
                 language: "HTML",
                 private: false,
                 homepage: "https://vaultmind.naklitechie.com",
@@ -449,7 +454,7 @@
                 repo: "KoLocal",
                 created: "2026-04-03",
                 updated: "2026-04-03",
-                description: "Go (Baduk) vs MCTS AI &mdash; fast numeric playout engine, 9&times;9/13&times;13/19&times;19, zero dependencies",
+                description: "Play Go (Baduk) against an AI opponent. Supports 9&times;9, 13&times;13, and 19&times;19 boards.",
                 language: "HTML",
                 private: false,
                 homepage: "https://naklitechie.github.io/KoLocal/",
@@ -460,7 +465,7 @@
                 repo: "LocalMind",
                 created: "2026-04-03",
                 updated: "2026-04-09",
-                description: "Private AI research agent &mdash; 9 tools, RAG memory, web search, PDF/DOCX ingestion, multimodal. Gemma 4 via WebGPU, zero backend",
+                description: "Private AI research agent &mdash; web search, document ingestion, RAG memory. Runs entirely in your browser.",
                 language: "HTML",
                 private: false,
                 homepage: "https://naklitechie.github.io/LocalMind/",
@@ -471,7 +476,7 @@
                 repo: "blurlocal",
                 created: "2026-04-03",
                 updated: "2026-04-03",
-                description: "Face blur &mdash; detect and blur faces in photos and videos with MediaPipe, gaussian &amp; pixelate modes",
+                description: "Detect and blur faces in photos and videos. Gaussian and pixelate modes, fully local.",
                 language: "HTML",
                 private: false,
                 homepage: "https://naklitechie.github.io/blurlocal/",
@@ -482,7 +487,7 @@
                 repo: "StripLocal",
                 created: "2026-03-18",
                 updated: "2026-04-01",
-                description: "EXIF metadata stripper &mdash; drag-and-drop images, canvas re-encode, zero dependencies",
+                description: "Strip EXIF metadata from images. Drag, drop, download clean copies.",
                 language: "HTML",
                 private: false,
                 homepage: "https://naklitechie.github.io/StripLocal/",
@@ -493,7 +498,7 @@
                 repo: "SnipLocal",
                 created: "2026-03-19",
                 updated: "2026-04-01",
-                description: "Background remover &mdash; RMBG-1.4, passport photo mode, edge softening, no uploads",
+                description: "Remove image backgrounds. Includes passport photo mode with standard dimensions.",
                 language: "HTML",
                 private: false,
                 homepage: "https://naklitechie.github.io/SnipLocal/",
@@ -504,7 +509,7 @@
                 repo: "BabelLocal",
                 created: "2026-03-18",
                 updated: "2026-04-01",
-                description: "Universal translator &mdash; 55 languages, NLLB model via Transformers.js, fully in-browser",
+                description: "Universal translator &mdash; 55 languages, fully in-browser.",
                 language: "HTML",
                 private: false,
                 homepage: "https://naklitechie.github.io/BabelLocal/",
@@ -515,7 +520,7 @@
                 repo: "VoiceVault",
                 created: "2026-03-18",
                 updated: "2026-04-01",
-                description: "In-browser voice transcription &mdash; Whisper model, fully private and local after initial cache",
+                description: "Voice transcription powered by Whisper. Private and local after the first load.",
                 language: "HTML",
                 private: false,
                 homepage: "https://naklitechie.github.io/VoiceVault/",
@@ -526,7 +531,7 @@
                 repo: "strait-command",
                 created: "2026-03-17",
                 updated: "2026-04-01",
-                description: "Clear the Hormuz Strait &mdash; strategy game",
+                description: "Naval strategy game &mdash; clear the Hormuz Strait.",
                 language: "HTML",
                 private: false,
                 homepage: "https://naklitechie.github.io/strait-command/",
@@ -537,7 +542,7 @@
                 repo: "chokepoint",
                 created: "2026-03-21",
                 updated: "2026-04-01",
-                description: "Maritime tower defense &mdash; hold the strait",
+                description: "Maritime tower defense &mdash; hold the chokepoint.",
                 language: "HTML",
                 private: false,
                 homepage: "https://naklitechie.github.io/chokepoint/",
@@ -548,7 +553,7 @@
                 repo: "Clacker",
                 created: "2026-03-26",
                 updated: "2026-04-01",
-                description: "No-dependency split-flap display for your screen",
+                description: "Split-flap display for your screen. Pure CSS animation, no dependencies.",
                 language: "HTML",
                 private: false,
                 homepage: "https://naklitechie.github.io/Clacker/",
@@ -559,7 +564,7 @@
                 repo: "KingMe",
                 created: "2026-03-18",
                 updated: "2026-04-01",
-                description: "English draughts/checkers vs minimax AI &mdash; custom SVG board, correspondence mode, zero dependencies",
+                description: "Checkers (English draughts) against an AI. Play live or send a game link to a friend.",
                 language: "HTML",
                 private: false,
                 homepage: "https://naklitechie.github.io/KingMe/",
@@ -570,7 +575,7 @@
                 repo: "GambitLocal",
                 created: "2026-03-18",
                 updated: "2026-04-01",
-                description: "In-browser chess vs Stockfish &mdash; correspondence mode via URL, no server side components",
+                description: "Chess against Stockfish. Play live or share a game link for correspondence play.",
                 language: "HTML",
                 private: false,
                 homepage: "https://naklitechie.github.io/GambitLocal/",
@@ -581,7 +586,7 @@
                 repo: "3d-tic-tac-toe",
                 created: "2026-03-09",
                 updated: "2026-04-01",
-                description: "3D Tic-Tac-Toe playable in the browser &mdash; Three.js, vs AI or 2-player",
+                description: "3D Tic-Tac-Toe &mdash; play against AI or a friend on a 4&times;4&times;4 cube.",
                 language: "HTML",
                 private: false,
                 homepage: "https://naklitechie.github.io/3d-tic-tac-toe/",
@@ -592,7 +597,7 @@
                 repo: "ScanLocal",
                 created: "2026-03-28",
                 updated: "2026-03-29",
-                description: "In-browser OCR &mdash; extract text from images and PDFs, fully private and local",
+                description: "OCR &mdash; extract text from images and PDFs, fully private and local.",
                 language: "HTML",
                 private: false,
                 homepage: "https://naklitechie.github.io/ScanLocal/",
@@ -603,7 +608,7 @@
                 repo: "PredictionMarket",
                 created: "2026-03-19",
                 updated: "2026-03-26",
-                description: "Educational prediction market simulator &mdash; Parimutuel + LMSR markets, 4-player demo mode",
+                description: "Prediction market simulator &mdash; create markets, trade outcomes, watch prices move.",
                 language: "HTML",
                 private: false,
                 homepage: "https://naklitechie.github.io/PredictionMarket/",
@@ -614,7 +619,7 @@
                 repo: "VampireHunter",
                 created: "2025-09-17",
                 updated: "2025-10-16",
-                description: "Vampire Hunter game/project",
+                description: "Vampire Hunter &mdash; a Python game project.",
                 language: "Python",
                 private: false,
                 homepage: null,
@@ -625,7 +630,7 @@
                 repo: "GPU-Programming",
                 created: "2025-10-19",
                 updated: "2025-10-23",
-                description: "GPU programming projects and experiments",
+                description: "GPU programming experiments in CUDA.",
                 language: "CUDA",
                 private: false,
                 homepage: null,
@@ -636,7 +641,7 @@
                 repo: "SortingBarrierBenchmark",
                 created: "2025-08-14",
                 updated: "2025-08-14",
-                description: "Benchmark of the 'Breaking the Sorting Barrier' SSSP algorithm against Dijkstra's, using OpenStreetMap data",
+                description: "Shortest-path algorithm benchmark using OpenStreetMap road networks.",
                 language: "Python",
                 private: false,
                 homepage: null,
@@ -647,7 +652,7 @@
                 repo: "PineScriptCoder",
                 created: "2025-09-19",
                 updated: "2025-09-19",
-                description: "PineScript coding resources and tools",
+                description: "PineScript coding resources for TradingView.",
                 language: "HTML",
                 private: false,
                 homepage: null,
@@ -658,7 +663,7 @@
                 repo: "qwen-backup",
                 created: "2025-09-02",
                 updated: "2025-09-02",
-                description: "CLI instructions and shell scripts to maintain local backups",
+                description: "Shell scripts for maintaining local model backups.",
                 language: "Shell",
                 private: false,
                 homepage: null,
