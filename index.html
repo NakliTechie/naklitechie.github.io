@@ -198,6 +198,7 @@
         .tag-chat       { background: #E8E0EC; border-color: #C4B0D0; color: #5A3A6A; }
         .tag-media      { background: #F0E4CC; border-color: #D4C090; color: #6B5020; }
         .tag-simulation { background: #EDDDD4; border-color: #D4AEA0; color: #7A3E30; }
+        .tag-history    { background: #E4E0D8; border-color: #C0B89C; color: #4A4030; }
         .tag-dev        { background: #E8E4DE; border-color: #C4BEB4; color: #4A463E; }
 
         .tags-wrap {
@@ -353,6 +354,7 @@
             chat:       'tag-chat',
             media:      'tag-media',
             simulation: 'tag-simulation',
+            history:    'tag-history',
             dev:        'tag-dev'
         };
 
@@ -363,6 +365,7 @@
             chat:       'Chat',
             media:      'Media',
             simulation: 'Simulation',
+            history:    'History',
             dev:        'Dev'
         };
 
@@ -373,11 +376,33 @@
                 repo: "Mechanikon",
                 created: "2026-04-17",
                 updated: "2026-04-18",
-                description: "The ancient Greek Antikythera mechanism, live in your browser. Explore three reconstructions, take a guided tour, click any gear to read its inscription.",
+                description: "A digital museum of interactive simulations of historical mechanisms &mdash; ancient clocks, astronomical devices, and systems of time. Browser-native, no server.",
                 language: "HTML",
-                private: false,
+                private: true,
                 homepage: "https://mechanikon.naklitechie.com",
-                tags: ["tool", "history", "3d"]
+                tags: ["simulation", "history"]
+            },
+            {
+                name: "Antikythera Mechanism",
+                repo: "Mechanikon",
+                created: "2026-04-17",
+                updated: "2026-04-18",
+                description: "The ancient Greek Antikythera mechanism, live in your browser. Three gear-train reconstructions (Freeth 2006, Freeth 2021, Wright 2012), guided tour, inscriptions.",
+                language: "HTML",
+                private: true,
+                homepage: "https://mechanikon.naklitechie.com/antikythera/",
+                tags: ["simulation", "history"]
+            },
+            {
+                name: "Calendars of the World",
+                repo: "Mechanikon",
+                created: "2026-04-17",
+                updated: "2026-04-18",
+                description: "Every system humanity has used to name a day &mdash; 22 calendars, living and dead, in concentric rings and stacked strips. In development.",
+                language: "HTML",
+                private: true,
+                homepage: null,
+                tags: ["simulation", "history"]
             },
             {
                 name: "MoD",
