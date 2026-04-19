@@ -865,6 +865,13 @@
             });
         }
 
+        function fmtCreated(dateStr) {
+            if (!dateStr) return '';
+            const d = new Date(dateStr + 'T00:00:00');
+            const day = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][d.getDay()];
+            return `${day}, ${dateStr.slice(2,4)}${dateStr.slice(5,7)}${dateStr.slice(8,10)}`;
+        }
+
         function renderProjects() {
             const grid = document.getElementById('projects-grid');
             let html = '';
@@ -894,10 +901,15 @@
                     ? ''
                     : `<a href="https://github.com/NakliTechie/${project.repo}" class="btn btn-outline-primary btn-gh"><i class="bi bi-github"></i> View Repo</a>`;
 
+                const createdLabel = project.created ? fmtCreated(project.created) : '';
+
                 html += `
                     <div class="col-md-6 col-lg-4 project-col" data-tags="${tagsData}">
                         <div class="project-card p-4 d-flex flex-column">
-                            <h5>${repoLink}</h5>
+                            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:0.5rem;">
+                                <h5 style="margin:0;">${repoLink}</h5>
+                                <time style="font-size:11px;color:var(--faint);white-space:nowrap;padding-top:2px;">${createdLabel}</time>
+                            </div>
                             <div class="tags-wrap">
                                 ${tagsHtml}
                             </div>
