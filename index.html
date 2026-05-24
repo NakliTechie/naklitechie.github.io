@@ -252,6 +252,35 @@
             color: var(--bg);
         }
 
+        /* ── Flagship cards ── */
+        .flagship-card {
+            background: var(--primary);
+            border-radius: 12px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .flagship-card h4 {
+            margin-bottom: 0.75rem;
+            font-size: 1.15rem;
+        }
+        .flagship-card h4 a {
+            color: var(--bg);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .flagship-card h4 a:hover {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+        .flagship-desc {
+            color: rgba(247,242,231,0.6);
+            font-size: 0.88rem;
+            flex-grow: 1;
+            margin-bottom: 1rem;
+            line-height: 1.55;
+        }
+
         /* ── Fade in/out for filtering ── */
         .project-col {
             transition: opacity 0.2s, transform 0.2s;
@@ -322,6 +351,62 @@
                     a Linux VM in the browser tab, and an interactive atlas of 2,500 years of Indian history &mdash;
                     all as single HTML files. Everything is open source.
                 </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flagship Section -->
+    <section class="container mb-5">
+        <h2 class="section-title"><i class="bi bi-stars"></i> Flagship</h2>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="flagship-card p-4">
+                    <h4><a href="https://naklios.dev/">NakliOS</a></h4>
+                    <p class="flagship-desc">A desktop in your browser for the entire NakliTechie collection &mdash; folders, windows, a dock, spotlight search, drag-and-drop. 40+ single-file apps in one place.</p>
+                    <div class="card-actions">
+                        <a href="https://github.com/NakliTechie/nakli-dev" class="btn btn-outline-primary btn-gh"><i class="bi bi-github"></i> View Repo</a>
+                        <a href="https://naklios.dev/" class="btn btn-success btn-gh"><i class="bi bi-box-arrow-up-right"></i> Try</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="flagship-card p-4">
+                    <h4><a href="https://crate.naklitechie.com">Crate</a></h4>
+                    <p class="flagship-desc">A personal cloud folder. Files live in a bucket you own, encrypted before they leave your browser &mdash; AES-256-GCM, BYOK, no NakliTechie accounts on the path.</p>
+                    <div class="card-actions">
+                        <a href="https://github.com/NakliTechie/crate" class="btn btn-outline-primary btn-gh"><i class="bi bi-github"></i> View Repo</a>
+                        <a href="https://crate.naklitechie.com" class="btn btn-success btn-gh"><i class="bi bi-box-arrow-up-right"></i> Try</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="flagship-card p-4">
+                    <h4><a href="https://naklitechie.github.io/LocalMind/">LocalMind</a></h4>
+                    <p class="flagship-desc">Private AI research agent &mdash; web search, document ingestion, RAG memory. Runs entirely in your browser.</p>
+                    <div class="card-actions">
+                        <a href="https://github.com/NakliTechie/LocalMind" class="btn btn-outline-primary btn-gh"><i class="bi bi-github"></i> View Repo</a>
+                        <a href="https://naklitechie.github.io/LocalMind/" class="btn btn-success btn-gh"><i class="bi bi-box-arrow-up-right"></i> Try</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="flagship-card p-4">
+                    <h4><a href="https://vaultmind.naklitechie.com/">VaultMind</a></h4>
+                    <p class="flagship-desc">Obsidian vault explorer &mdash; force graph, full-text search, AI chat, and in-place markdown editing.</p>
+                    <div class="card-actions">
+                        <a href="https://github.com/NakliTechie/VaultMind" class="btn btn-outline-primary btn-gh"><i class="bi bi-github"></i> View Repo</a>
+                        <a href="https://vaultmind.naklitechie.com/" class="btn btn-success btn-gh"><i class="bi bi-box-arrow-up-right"></i> Try</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="flagship-card p-4">
+                    <h4><a href="https://github.com/NakliTechie/private-mesh">Private Mesh</a></h4>
+                    <p class="flagship-desc">The capability fabric underneath NakliOS &mdash; seven primitives (Identity, Vault, Sync, LLM, Bridge) across Go and JS SDKs.</p>
+                    <div class="card-actions">
+                        <a href="https://github.com/NakliTechie/private-mesh" class="btn btn-outline-primary btn-gh"><i class="bi bi-github"></i> View Repo</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
