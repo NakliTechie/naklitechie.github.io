@@ -317,11 +317,10 @@
                     Single-file web apps that run entirely in your browser &mdash; no accounts, no servers, no data leaving your device.
                 </p>
                 <p>
-                    The latest batch includes a 3D simulation of the Antikythera mechanism,
-                    encrypted team chat, a full accounting suite for Indian SMBs,
-                    a personal site builder, and a dev toolkit &mdash; all as single HTML files.
-                    Older projects cover AI tools (translation, transcription, research agents),
-                    board games, and media utilities. Everything is open source.
+                    Recent additions: a Twitter archive cleaner, P2P file transfer over WebRTC,
+                    an LLM comparison workbench, a desktop OS for the whole collection,
+                    a Linux VM in the browser tab, and an interactive atlas of 2,500 years of Indian history &mdash;
+                    all as single HTML files. Everything is open source.
                 </p>
             </div>
         </div>
@@ -372,6 +371,28 @@
         // ── Projects — ordered by last updated (most recent first) ──
         const projects = [
             {
+                name: "bakwaas",
+                repo: "bakwaas",
+                created: "2026-05-23",
+                updated: "2026-05-23",
+                description: "Explore your Twitter archive. Find the noise. Delete it.",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklitechie.github.io/bakwaas/",
+                tags: ["tool", "privacy"]
+            },
+            {
+                name: "India 2500",
+                repo: "india-2500",
+                created: "2026-05-20",
+                updated: "2026-05-20",
+                description: "An interactive HTML atlas of 2,500 years of subcontinental history &mdash; polities, battles, dynasties, sites, and trade routes.",
+                language: "HTML",
+                private: false,
+                homepage: null,
+                tags: ["history"]
+            },
+            {
                 name: "Books",
                 repo: "Books",
                 created: "2026-05-18",
@@ -406,14 +427,47 @@
             },
             {
                 name: "SansadLocal",
-                repo: "SansadLocal",
+                repo: "SansadSaar",
                 created: "2026-05-07",
-                updated: "2026-05-08",
+                updated: "2026-05-18",
                 description: "Browse, search, and summarise reports from India's 24 Parliamentary Standing Committees. AI runs in your browser &mdash; no key needed.",
                 language: "HTML",
                 private: false,
                 homepage: "https://sansadlocal.naklitechie.com",
                 tags: ["ai", "civic", "research"]
+            },
+            {
+                name: "kabootar",
+                repo: "kabootar",
+                created: "2026-05-01",
+                updated: "2026-05-01",
+                description: "Browser-native LocalSend in a single HTML file. Two devices on the same WiFi scan each other&rsquo;s QR &mdash; file transfers P2P over WebRTC. No install, no server, no relay.",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklitechie.github.io/kabootar/",
+                tags: ["tool", "privacy"]
+            },
+            {
+                name: "Ghoshana",
+                repo: "Ghoshana",
+                created: "2026-05-01",
+                updated: "2026-05-01",
+                description: "IVR script authoring for polls, announcements, and voter outreach &mdash; on-device IndicTrans2 translation into 11 Indic languages. No server, no API keys.",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklitechie.github.io/Ghoshana/",
+                tags: ["ai", "tool"]
+            },
+            {
+                name: "Anuvaad",
+                repo: "Anuvaad",
+                created: "2026-04-28",
+                updated: "2026-04-28",
+                description: "English &rarr; Indic translation in 11 languages &mdash; IndicTrans2 ONNX, no server, no account. Specialized for Hindi, Bengali, Tamil, Telugu, Kannada, and more.",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklitechie.github.io/Anuvaad/",
+                tags: ["ai", "tool"]
             },
             {
                 name: "FretLocal",
