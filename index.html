@@ -459,6 +459,193 @@
         // ── Projects — ordered by last updated (most recent first) ──
         const projects = [
             {
+                name: "Private Mesh",
+                repo: "private-mesh",
+                created: "2026-05-16",
+                updated: "2026-06-25",
+                description: "The capability fabric underneath nakliOS &mdash; a sovereign, browser-native, agent-aware mesh of primitives (Identity, Vault, Sync, LLM, Bridge) across Go and JS SDKs.",
+                language: "Go",
+                private: false,
+                homepage: null,
+                tags: ["dev", "privacy"]
+            },
+            {
+                name: "NakliData",
+                repo: "NakliData",
+                created: "2026-05-15",
+                updated: "2026-06-24",
+                description: "Browser-native semantic data workbench. Point it at your files, folders, or public data dumps &mdash; it tells you what's in them, lets you query and chart, and writes results back into your other tools, without anything leaving the tab.",
+                language: "TypeScript",
+                private: false,
+                homepage: "https://naklitechie.github.io/NakliData/",
+                tags: ["tool", "ai", "data"]
+            },
+            {
+                name: "Docket",
+                repo: "docket",
+                created: "2026-06-10",
+                updated: "2026-06-24",
+                description: "Self-hosted, sovereign case-management and customer-360 platform &mdash; case intake, SLA-tracked lifecycle, a light CRM, a tamper-evident audit log, and an AI resolution layer that runs on your own model endpoint. English and Hindi throughout.",
+                language: "Ruby",
+                private: false,
+                homepage: null,
+                tags: ["tool", "ai"]
+            },
+            {
+                name: "Sheaf",
+                repo: "sheaf",
+                created: "2026-06-21",
+                updated: "2026-06-22",
+                description: "Browser-native PDF editor in a single HTML file &mdash; every operation runs on your disk. No account, no upload, no telemetry, no limits &mdash; and an agent interface none of the others have.",
+                language: "JavaScript",
+                private: false,
+                homepage: "https://sheaf.naklitechie.com",
+                tags: ["tool", "privacy"]
+            },
+            {
+                name: "ntkit",
+                repo: "ntkit",
+                created: "2026-06-22",
+                updated: "2026-06-22",
+                description: "The rigor layer for AI-assisted development &mdash; eighteen Claude Code slash commands that add operational discipline (memory, resumption, whole-app audits, secret-safe shipping) across as many repos as you run at once.",
+                language: "Shell",
+                private: false,
+                homepage: null,
+                tags: ["dev", "ai"]
+            },
+            {
+                name: "qa-loop",
+                repo: "qa-loop",
+                created: "2026-06-21",
+                updated: "2026-06-21",
+                description: "A text-only coding model paired with an open vision critic in a render &rarr; critique &rarr; repair loop. The coder writes the HTML; the critic grades a screenshot of it; failed checks feed back as concrete fixes.",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklitechie.github.io/qa-loop/",
+                tags: ["ai", "dev"]
+            },
+            {
+                name: "kohra",
+                repo: "kohra",
+                created: "2026-06-10",
+                updated: "2026-06-18",
+                description: "Text-diffusion language models running in the browser &mdash; a denoising loop over ONNX Runtime Web and WebGPU. To our knowledge, the first in-browser text-diffusion generation.",
+                language: "Python",
+                private: false,
+                homepage: "https://naklitechie.github.io/kohra/",
+                tags: ["ai", "ml"]
+            },
+            {
+                name: "Caucus",
+                repo: "caucus",
+                created: "2026-06-15",
+                updated: "2026-06-15",
+                description: "A local, turn-aware proxy between your coding agent and the models &mdash; on action turns it generates several candidates, runs them against your repo's tests in an isolated sandbox, and keeps what passes.",
+                language: "Python",
+                private: false,
+                homepage: null,
+                tags: ["dev", "ai"]
+            },
+            {
+                name: "Lathe",
+                repo: "lathe",
+                created: "2026-06-14",
+                updated: "2026-06-14",
+                description: "Browser-native parametric code-CAD &mdash; the code is the model. An OpenCASCADE kernel compiled to WebAssembly computes the geometry in your tab; prompt an AI to write the module, then export STEP and STL. No server, no accounts, no telemetry.",
+                language: "TypeScript",
+                private: false,
+                homepage: null,
+                tags: ["tool", "ai"]
+            },
+            {
+                name: "erdos",
+                repo: "erdos",
+                created: "2026-06-10",
+                updated: "2026-06-10",
+                description: "A computational research program on the Erd&#337;s unit-distance problem &mdash; chasing densest-known unit-distance-graph records for 30 &le; n &le; 100 and probing the structure-vs-randomness dichotomy via bisector energy.",
+                language: "Python",
+                private: false,
+                homepage: null,
+                tags: ["ml", "research"]
+            },
+            {
+                name: "Tide",
+                repo: "Tide",
+                created: "2026-06-09",
+                updated: "2026-06-09",
+                description: "A single-file calendar page &mdash; your Google Calendar rendered fast and keyboard-first, with nothing in between. No app to install, no account, no server; your token never leaves your browser.",
+                language: "HTML",
+                private: false,
+                homepage: null,
+                tags: ["tool", "privacy"]
+            },
+            {
+                name: "Tack",
+                repo: "tack",
+                created: "2026-05-30",
+                updated: "2026-05-31",
+                description: "A portable coding-agent harness &mdash; the reasoning loop that drives a model through plan &rarr; edit &rarr; verify &rarr; iterate &rarr; learn toward passing tests, behind three adapter seams. NakliTechie research.",
+                language: "Python",
+                private: false,
+                homepage: null,
+                tags: ["dev", "ai"]
+            },
+            {
+                name: "Menagerie",
+                repo: "menagerie",
+                created: "2026-05-27",
+                updated: "2026-05-29",
+                description: "Run a whole fleet of coding agents &mdash; Claude Code, Codex, opencode, Aider, and friends &mdash; side by side in one browser tab. The page streams each agent's terminal from small relays you run next to them. No server, no account, no telemetry.",
+                language: "HTML",
+                private: false,
+                homepage: null,
+                tags: ["dev", "ai"]
+            },
+            {
+                name: "Combe",
+                repo: "Combe",
+                created: "2026-05-17",
+                updated: "2026-05-17",
+                description: "A browser-native code-audit tool in one HTML file &mdash; point it at a repo, it walks the tree, slices the codebase into reviewable units, sends each to your chosen LLM, and writes findings into a .combe/ directory. It audits; it doesn't patch.",
+                language: "JavaScript",
+                private: false,
+                homepage: null,
+                tags: ["dev", "ai"]
+            },
+            {
+                name: "micro-gpt",
+                repo: "micro-gpt",
+                created: "2026-05-03",
+                updated: "2026-05-03",
+                description: "A GPT built across the abstraction stack &mdash; from pure Python down to a WebAssembly demo that generates names character-by-character at ~1.34M tokens/sec in the browser.",
+                language: "Python",
+                private: false,
+                homepage: "https://naklitechie.github.io/micro-gpt/",
+                tags: ["ml", "ai"]
+            },
+            {
+                name: "Lunar",
+                repo: "lunar",
+                created: "2026-04-09",
+                updated: "2026-04-26",
+                description: "A menstrual cycle tracker that runs only on your device. No account, no server, no analytics &mdash; there is no company database, so there is nothing for anyone to ask for.",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklitechie.github.io/lunar/",
+                tags: ["tool", "privacy"]
+            },
+            {
+                name: "Ingenious Machines",
+                repo: "ingenious-machines",
+                created: "2026-04-02",
+                updated: "2026-04-03",
+                description: "Animated illustrations from the classic four-volume treatise <em>Ingenious Mechanisms for Designers and Inventors</em> (1930&ndash;1953) &mdash; a browser-native mechanical-engineering reference.",
+                language: "HTML",
+                private: false,
+                homepage: null,
+                tags: ["simulation", "history"]
+            },
+            {
                 name: "Crux",
                 repo: "crux",
                 created: "2026-06-11",
