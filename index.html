@@ -351,9 +351,9 @@
                     The rest is a collection of single-file web apps that run entirely in your browser &mdash; no accounts, no servers, no data leaving your device.
                 </p>
                 <p>
-                    Recent additions: a Twitter archive cleaner, P2P file transfer over WebRTC,
-                    an LLM comparison workbench, a desktop OS for the whole collection,
-                    a Linux VM in the browser tab, and an interactive atlas of 2,500 years of Indian history &mdash;
+                    Recent additions: a film-look photo studio with an on-device camera,
+                    a pigment-accurate paint&ndash;mixing planner, a tool that hides messages inside
+                    ordinary LLM text, and a database-like workspace over your own Google Sheets &mdash;
                     all as single HTML files. Everything is open source.
                 </p>
             </div>
@@ -460,6 +460,94 @@
 
         // ── Projects — ordered by last updated (most recent first) ──
         const projects = [
+            {
+                name: "Muse",
+                repo: "Muse",
+                created: "2026-07-31",
+                updated: "2026-08-01",
+                description: "Take self-portraits like a Davide Sorrenti muse &mdash; a single-file, on-device photo studio with 19 film looks spanning 150 years (daguerreotype to early digicam), a WebGL2 grade engine, and an in-browser camera. The recipe is baked into every export; nothing is uploaded.",
+                language: "HTML",
+                private: false,
+                homepage: "https://muse.naklitechie.com",
+                tags: ["media", "image", "privacy"]
+            },
+            {
+                name: "Colour Mixer",
+                repo: "colour-mixer",
+                created: "2026-07-16",
+                updated: "2026-07-26",
+                description: "Plan watercolour, gouache, acrylic, oil, and ink mixes with pigment-accurate blending &mdash; real subtractive colour via spectral.js (Kubelka&ndash;Munk) &mdash; plus glazes, saved recipes, photo matching, and a ~3,700-paint dupe finder. Entirely in your browser.",
+                language: "JavaScript",
+                private: false,
+                homepage: "https://mixer.naklitechie.com",
+                tags: ["tool", "design"]
+            },
+            {
+                name: "Delta",
+                repo: "Delta",
+                created: "2026-07-27",
+                updated: "2026-07-29",
+                description: "Turns ordinary Google Sheets into a calm, database-like workspace &mdash; grouped views, forms, and relations &mdash; without moving your data into another company's database. Your sheet stays the source of truth.",
+                language: "JavaScript",
+                private: false,
+                homepage: "https://delta.naklitechie.com",
+                tags: ["tool", "data", "productivity"]
+            },
+            {
+                name: "Chaff",
+                repo: "Chaff",
+                created: "2026-07-18",
+                updated: "2026-07-18",
+                description: "Browser-native linguistic steganography &mdash; encrypt a secret, then use a local LLM's token distribution to encode the ciphertext as innocent-looking cover text. Decoding reverses it. Nothing leaves the tab.",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklitechie.github.io/Chaff/",
+                tags: ["ai", "privacy", "tool"]
+            },
+            {
+                name: "Skim",
+                repo: "skim",
+                created: "2026-07-29",
+                updated: "2026-07-31",
+                description: "Swipe-to-zero triage for Gmail &mdash; every thread is a card you clear in one gesture, inbox-zero as a stack you burn down. Your token stays in the browser; nothing is stored on a server.",
+                language: "JavaScript",
+                private: true,
+                homepage: "https://skim.naklitechie.com",
+                tags: ["tool", "productivity", "privacy"]
+            },
+            {
+                name: "Grain",
+                repo: "grain",
+                created: "2026-07-22",
+                updated: "2026-07-23",
+                description: "An atlas of Japanese design &mdash; the twenty-two styles that shape how Japan makes things, split into felt principles (wabi-sabi, ma, iki&hellip;) and made forms &mdash; plus a wagara pattern studio to generate and export the motifs. Single file.",
+                language: "HTML",
+                private: true,
+                homepage: "https://grain.naklitechie.com",
+                tags: ["tool", "design", "history"]
+            },
+            {
+                name: "Passage",
+                repo: "passage",
+                created: "2026-07-03",
+                updated: "2026-07-04",
+                description: "A book club's shared shelf as one web app on the club's own Cloudflare account &mdash; whitelist-gated with email OTP (no passwords), browse and search the whole library, and keep track of who has what.",
+                language: "HTML",
+                private: true,
+                homepage: "https://passage.naklitechie.com",
+                tags: ["tool", "reading"]
+            },
+            {
+                name: "LuruTraffic",
+                repo: "lurutraffic",
+                created: "2026-06-12",
+                updated: "2026-06-12",
+                description: "Live drive times to the places you actually go, from wherever you are &mdash; no map, just the one question you ask before leaving. Bring your own key; single file; nothing stored.",
+                language: "HTML",
+                private: true,
+                homepage: "https://lurutraffic.naklitechie.com",
+                tags: ["tool", "maps"]
+            },
             {
                 name: "Private Mesh",
                 repo: "private-mesh",
