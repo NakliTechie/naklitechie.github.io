@@ -263,6 +263,7 @@
         .flagship-card h4 {
             margin-bottom: 0.75rem;
             font-size: 1.15rem;
+            color: var(--bg);
         }
         .flagship-card h4 a {
             color: var(--bg);
@@ -279,6 +280,22 @@
             flex-grow: 1;
             margin-bottom: 1rem;
             line-height: 1.55;
+        }
+        .flagship-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.78rem;
+            color: rgba(247,242,231,0.55);
+            border: 1px solid rgba(247,242,231,0.22);
+            border-radius: 20px;
+            padding: 0.3rem 0.8rem;
+            align-self: flex-start;
+        }
+        .flagship-status .dot {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: #C4A867;
+            box-shadow: 0 0 0 3px rgba(196,168,103,0.18);
         }
 
         /* ── Fade in/out for filtering ── */
@@ -348,13 +365,13 @@
                     Lately my work has centered on <strong>small language model training and distributed inference</strong> &mdash; getting capable models to fine-tune and serve on the hardware you actually have.
                 </p>
                 <p>
-                    The rest is a collection of single-file web apps that run entirely in your browser &mdash; no accounts, no servers, no data leaving your device.
+                    Most of the rest is a collection of single-file web apps that run entirely in your browser &mdash; no accounts, no servers, no data leaving your device.
                 </p>
                 <p>
-                    Recent additions: a film-look photo studio with an on-device camera,
-                    a pigment-accurate paint&ndash;mixing planner, a tool that hides messages inside
-                    ordinary LLM text, and a database-like workspace over your own Google Sheets &mdash;
-                    all as single HTML files. Everything is open source.
+                    Lately the frontier work has pulled two ways at once: pushing model inference all the way
+                    into the browser tab (text-diffusion language models in <a href="https://naklitechie.github.io/kohra/">kohra</a>,
+                    and the biggest-model-fast lab it spun off), and, when a model is simply too big for a tab,
+                    serving it on cheap spot GPUs that survive being reclaimed mid-run. Everything public is open source.
                 </p>
             </div>
         </div>
@@ -366,28 +383,22 @@
         <div class="row g-4">
             <div class="col-md-6">
                 <div class="flagship-card p-4">
-                    <h4><a href="https://naklios.dev/">NakliOS</a></h4>
-                    <p class="flagship-desc">A desktop in your browser for the entire NakliTechie collection &mdash; folders, windows, a dock, spotlight search, drag-and-drop. 40+ single-file apps in one place.</p>
-                    <div class="card-actions">
-                        <a href="https://github.com/NakliTechie/nakli-dev" class="btn btn-outline-primary btn-gh"><i class="bi bi-github"></i> View Repo</a>
-                        <a href="https://naklios.dev/" class="btn btn-success btn-gh"><i class="bi bi-box-arrow-up-right"></i> Try</a>
-                    </div>
+                    <h4>Cairn</h4>
+                    <p class="flagship-desc">Frontier-model inference on cheap spot GPUs &mdash; the kind the cloud can reclaim from you at any second. Fast checkpoint-and-migrate keeps a big model served at spot prices without the eviction being fatal.</p>
+                    <span class="flagship-status"><span class="dot"></span> In development &middot; private</span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="flagship-card p-4">
-                    <h4><a href="https://crate.naklitechie.com">Crate</a></h4>
-                    <p class="flagship-desc">A personal cloud folder. Files live in a bucket you own, encrypted before they leave your browser &mdash; AES-256-GCM, BYOK, no NakliTechie accounts on the path.</p>
-                    <div class="card-actions">
-                        <a href="https://github.com/NakliTechie/crate" class="btn btn-outline-primary btn-gh"><i class="bi bi-github"></i> View Repo</a>
-                        <a href="https://crate.naklitechie.com" class="btn btn-success btn-gh"><i class="bi bi-box-arrow-up-right"></i> Try</a>
-                    </div>
+                    <h4>Pitch</h4>
+                    <p class="flagship-desc">On-device voice commerce for online stores. Shoppers talk, search, ask about a product, and hear the answer read back &mdash; all in their own browser, on a per-merchant brand-tuned model. Zero inference cost per shopper.</p>
+                    <span class="flagship-status"><span class="dot"></span> In development &middot; private</span>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="flagship-card p-4">
                     <h4><a href="https://naklitechie.github.io/LocalMind/">LocalMind</a></h4>
-                    <p class="flagship-desc">Private AI research agent &mdash; web search, document ingestion, RAG memory. Runs entirely in your browser.</p>
+                    <p class="flagship-desc">Private AI research agent &mdash; web search, document ingestion, RAG memory, real tool calling, all on a small open model on WebGPU. Runs entirely in your browser.</p>
                     <div class="card-actions">
                         <a href="https://github.com/NakliTechie/LocalMind" class="btn btn-outline-primary btn-gh"><i class="bi bi-github"></i> View Repo</a>
                         <a href="https://naklitechie.github.io/LocalMind/" class="btn btn-success btn-gh"><i class="bi bi-box-arrow-up-right"></i> Try</a>
@@ -396,20 +407,30 @@
             </div>
             <div class="col-md-4">
                 <div class="flagship-card p-4">
-                    <h4><a href="https://vaultmind.naklitechie.com/">VaultMind</a></h4>
-                    <p class="flagship-desc">Obsidian vault explorer &mdash; force graph, full-text search, AI chat, and in-place markdown editing.</p>
+                    <h4><a href="https://naklitechie.github.io/kohra/">kohra</a></h4>
+                    <p class="flagship-desc">Text-diffusion language models running in the browser &mdash; a denoising loop over ONNX Runtime Web and WebGPU. To our knowledge, the first in-browser text-diffusion generation.</p>
                     <div class="card-actions">
-                        <a href="https://github.com/NakliTechie/VaultMind" class="btn btn-outline-primary btn-gh"><i class="bi bi-github"></i> View Repo</a>
-                        <a href="https://vaultmind.naklitechie.com/" class="btn btn-success btn-gh"><i class="bi bi-box-arrow-up-right"></i> Try</a>
+                        <a href="https://github.com/NakliTechie/kohra" class="btn btn-outline-primary btn-gh"><i class="bi bi-github"></i> View Repo</a>
+                        <a href="https://naklitechie.github.io/kohra/" class="btn btn-success btn-gh"><i class="bi bi-box-arrow-up-right"></i> Try</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="flagship-card p-4">
-                    <h4><a href="https://github.com/NakliTechie/private-mesh">Private Mesh</a></h4>
-                    <p class="flagship-desc">The capability fabric underneath NakliOS &mdash; seven primitives (Identity, Vault, Sync, LLM, Bridge) across Go and JS SDKs.</p>
+                    <h4><a href="https://github.com/NakliTechie/browser-big-fast-lab">browser-big-fast-lab</a></h4>
+                    <p class="flagship-desc">A lab chasing the biggest model you can run genuinely fast in a browser, judged as an AI sidecar (time-to-first-token, tool-calling). Measured, not marketed. A child of kohra.</p>
                     <div class="card-actions">
-                        <a href="https://github.com/NakliTechie/private-mesh" class="btn btn-outline-primary btn-gh"><i class="bi bi-github"></i> View Repo</a>
+                        <a href="https://github.com/NakliTechie/browser-big-fast-lab" class="btn btn-outline-primary btn-gh"><i class="bi bi-github"></i> View Repo</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="flagship-card p-4">
+                    <h4><a href="https://naklios.dev/">NakliOS</a></h4>
+                    <p class="flagship-desc">A desktop-themed launcher for the entire NakliTechie collection &mdash; folders, windows, a dock, Cmd-K spotlight, drag-and-drop. Every tool in one place, in a single HTML file.</p>
+                    <div class="card-actions">
+                        <a href="https://github.com/NakliTechie/nakliOS" class="btn btn-outline-primary btn-gh"><i class="bi bi-github"></i> View Repo</a>
+                        <a href="https://naklios.dev/" class="btn btn-success btn-gh"><i class="bi bi-box-arrow-up-right"></i> Try</a>
                     </div>
                 </div>
             </div>
@@ -460,6 +481,28 @@
 
         // ── Projects — ordered by last updated (most recent first) ──
         const projects = [
+            {
+                name: "Summon",
+                repo: "summon",
+                created: "2026-08-15",
+                updated: "2026-08-19",
+                description: "A sovereign, keyboard-first launcher for macOS &mdash; native Swift, SuperCmd-class. Summon apps, files, snippets, and actions from one hotkey, with a removable on-device AI sidecar. No cloud account on the path.",
+                language: "Swift",
+                private: false,
+                homepage: null,
+                tags: ["tool", "productivity"]
+            },
+            {
+                name: "browser-big-fast-lab",
+                repo: "browser-big-fast-lab",
+                created: "2026-07-14",
+                updated: "2026-07-14",
+                description: "A lab chasing one question &mdash; the biggest model you can run genuinely fast in a browser, judged as an AI sidecar (time-to-first-token, tool-calling). Quantization-aware training and multi-token prediction, measured not marketed. A child of kohra.",
+                language: "Python",
+                private: false,
+                homepage: null,
+                tags: ["ai", "ml"]
+            },
             {
                 name: "Muse",
                 repo: "Muse",
@@ -744,6 +787,7 @@
                 language: "HTML",
                 private: false,
                 homepage: "https://crux.chiragpatnaik.com",
+                repoUrl: null,
                 tags: ["tool", "productivity", "strategy"]
             },
             {
@@ -792,10 +836,10 @@
             },
             {
                 name: "NakliOS",
-                repo: "nakli-dev",
+                repo: "nakliOS",
                 created: "2026-05-14",
-                updated: "2026-05-15",
-                description: "A desktop in your browser for the entire NakliTechie collection &mdash; folders, windows, a dock, Cmd-K spotlight, drag-and-drop. 40+ single-file apps in one place.",
+                updated: "2026-08-25",
+                description: "A desktop-themed launcher for the entire NakliTechie collection &mdash; folders, windows, a dock, Cmd-K spotlight, drag-and-drop. Every tool in one place, in a single HTML file. No server, no tracking, none of your data.",
                 language: "HTML",
                 private: false,
                 homepage: "https://naklios.dev/",
@@ -821,6 +865,7 @@
                 language: "HTML",
                 private: false,
                 homepage: "https://sansadsaar.naklitechie.com/",
+                repoUrl: "https://github.com/indiavotes/SansadSaar",
                 tags: ["ai", "civic", "research"]
             },
             {
@@ -1411,13 +1456,20 @@
 
                 const tagsData = (project.tags || []).join(',');
 
-                const repoLink = project.private
-                    ? `<i class="bi bi-repo"></i> ${project.name}`
-                    : `<a href="https://github.com/NakliTechie/${project.repo}"><i class="bi bi-repo"></i> ${project.name}</a>`;
+                // repoUrl override: explicit value (incl. null to suppress) wins;
+                // otherwise default to the NakliTechie repo unless the project is private.
+                const repoUrl = project.repoUrl !== undefined
+                    ? project.repoUrl
+                    : (project.private ? null : `https://github.com/NakliTechie/${project.repo}`);
 
-                const viewRepoBtn = project.private
-                    ? ''
-                    : `<a href="https://github.com/NakliTechie/${project.repo}" class="btn btn-outline-primary btn-gh"><i class="bi bi-github"></i> View Repo</a>`;
+                const nameHref = repoUrl || project.homepage || null;
+                const repoLink = nameHref
+                    ? `<a href="${nameHref}"><i class="bi bi-repo"></i> ${project.name}</a>`
+                    : `<i class="bi bi-repo"></i> ${project.name}`;
+
+                const viewRepoBtn = repoUrl
+                    ? `<a href="${repoUrl}" class="btn btn-outline-primary btn-gh"><i class="bi bi-github"></i> View Repo</a>`
+                    : '';
 
                 const createdLabel = project.created ? fmtCreated(project.created) : '';
 
