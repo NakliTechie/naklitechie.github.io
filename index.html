@@ -426,11 +426,11 @@
             </div>
             <div class="col-md-4">
                 <div class="flagship-card p-4">
-                    <h4><a href="https://naklitechie.github.io/NakliData/">NakliData</a></h4>
+                    <h4><a href="https://naklidata.naklitechie.com/">NakliData</a></h4>
                     <p class="flagship-desc">A browser-native semantic data workbench. Query millions of rows of CSV or Parquet with DuckDB compiled to WebAssembly, chart the results, and write them back &mdash; the data never leaves the tab.</p>
                     <div class="card-actions">
                         <a href="https://github.com/NakliTechie/NakliData" class="btn btn-outline-primary btn-gh"><i class="bi bi-github"></i> View Repo</a>
-                        <a href="https://naklitechie.github.io/NakliData/" class="btn btn-success btn-gh"><i class="bi bi-box-arrow-up-right"></i> Try</a>
+                        <a href="https://naklidata.naklitechie.com/" class="btn btn-success btn-gh"><i class="bi bi-box-arrow-up-right"></i> Try</a>
                     </div>
                 </div>
             </div>
@@ -618,7 +618,7 @@
                 description: "Browser-native semantic data workbench. Point it at your files, folders, or public data dumps &mdash; it tells you what's in them, lets you query and chart, and writes results back into your other tools, without anything leaving the tab.",
                 language: "TypeScript",
                 private: false,
-                homepage: "https://naklitechie.github.io/NakliData/",
+                homepage: "https://naklidata.naklitechie.com/",
                 tags: ["tool", "ai", "data"]
             },
             {
@@ -1409,7 +1409,7 @@
             let html = '<button class="filter-btn active" data-tag="all">All</button>';
             // Sort by count descending
             Object.entries(tagCounts)
-                .sort((a, b) => b[1] - a[1])
+                .toSorted((a, b) => b[1] - a[1])
                 .forEach(([tag, count]) => {
                     html += `<button class="filter-btn" data-tag="${tag}">${TAG_LABELS[tag] || tag} <span style="opacity:0.6">${count}</span></button>`;
                 });
@@ -1443,11 +1443,16 @@
             return `${day}, ${dateStr.slice(2,4)}${dateStr.slice(5,7)}${dateStr.slice(8,10)}`;
         }
 
+        function getProjectRepoUrl(project) {
+            if (project.repoUrl !== undefined) return project.repoUrl;
+            return project.private ? null : `https://github.com/NakliTechie/${project.repo}`;
+        }
+
         function renderProjects() {
             const grid = document.getElementById('projects-grid');
             let html = '';
 
-            const ordered = projects.slice().sort((a, b) => (b.updated || '').localeCompare(a.updated || ''));
+            const ordered = projects.toSorted((a, b) => (b.updated || '').localeCompare(a.updated || ''));
             ordered.forEach(project => {
                 const tryLink = project.homepage ?
                     `<a href="${project.homepage}" class="btn btn-success btn-gh"><i class="bi bi-box-arrow-up-right"></i> Try</a>` : '';
@@ -1466,9 +1471,7 @@
 
                 // repoUrl override: explicit value (incl. null to suppress) wins;
                 // otherwise default to the NakliTechie repo unless the project is private.
-                const repoUrl = project.repoUrl !== undefined
-                    ? project.repoUrl
-                    : (project.private ? null : `https://github.com/NakliTechie/${project.repo}`);
+                const repoUrl = getProjectRepoUrl(project);
 
                 const nameHref = repoUrl || project.homepage || null;
                 const repoLink = nameHref
