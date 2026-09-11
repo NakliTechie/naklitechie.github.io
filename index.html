@@ -368,9 +368,10 @@
                     Most of the rest is a collection of single-file web apps that run entirely in your browser &mdash; no accounts, no servers, no data leaving your device.
                 </p>
                 <p>
-                    Lately the frontier work has pulled two ways at once: pushing model inference all the way
+                    The frontier work pulls two ways at once: pushing model inference all the way
                     into the browser tab (text-diffusion language models in <a href="https://naklitechie.github.io/kohra/">kohra</a>), and, when a model is simply too big for a tab,
-                    serving it on cheap spot GPUs that survive being reclaimed mid-run. Everything public is open source.
+                    serving it on cheap spot GPUs that survive being reclaimed mid-run (<a href="https://github.com/NakliTechie/cairn">Cairn</a>, with its recovery core rebuilt from scratch in Rust as <a href="https://github.com/NakliTechie/warmswap">warmswap</a>).
+                    A newer thread is tooling for coding agents &mdash; <a href="https://github.com/NakliTechie/vise">vise</a> freezes what a codebase does and gates an agent's changes against it. Everything public is open source.
                 </p>
             </div>
         </div>
@@ -382,9 +383,11 @@
         <div class="row g-4">
             <div class="col-md-6">
                 <div class="flagship-card p-4">
-                    <h4>Cairn</h4>
-                    <p class="flagship-desc">Frontier-model inference on cheap spot GPUs &mdash; the kind the cloud can reclaim from you at any second. Fast checkpoint-and-migrate keeps a big model served at spot prices without the eviction being fatal.</p>
-                    <span class="flagship-status"><span class="dot"></span> In development &middot; private</span>
+                    <h4><a href="https://github.com/NakliTechie/cairn">Cairn</a></h4>
+                    <p class="flagship-desc">Frontier-model inference on cheap spot GPUs &mdash; the kind the cloud can reclaim from you at any second. A 671B open model striped by layers across single-GPU spot boxes; when a box dies mid-generation its slice moves to a warm spare and the token stream resumes bit-identical in 0.93 s. Proven live on a real fleet.</p>
+                    <div class="card-actions">
+                        <a href="https://github.com/NakliTechie/cairn" class="btn btn-outline-primary btn-gh"><i class="bi bi-github"></i> View Repo</a>
+                    </div>
                 </div>
             </div>
             <div class="col-md-6">
@@ -500,6 +503,127 @@
 
         // ── Projects — ordered by last updated (most recent first) ──
         const projects = [
+            {
+                name: "Cairn",
+                repo: "cairn",
+                created: "2026-06-19",
+                updated: "2026-09-10",
+                description: "Serve a frontier-class open model on a fleet of cheap, individually-reclaimable spot GPUs. One 671B model pipeline-split by layers across single-GPU boxes; a reclaimed box's slice re-stitches onto a warm spare and the committed token log replays, so generation resumes bit-identical &mdash; 0.93 s recovery, proven live on a Blackwell spot fleet. The pool then re-provisions itself.",
+                language: "Python",
+                private: false,
+                homepage: null,
+                tags: ["ai", "ml", "dev", "research"]
+            },
+            {
+                name: "Abhyas",
+                repo: "abhyas-app",
+                created: "2026-09-10",
+                updated: "2026-09-10",
+                description: "Self-paced practice for the whole Indian school curriculum, Class 1 through JEE/NEET &mdash; 16 subject graphs, 19,000+ verified MCQs and 66,000 drills. Drills, diagnostic quizzes, mock tests, and a mastery dashboard, progress kept on your device. Runs as an app inside NakliOS.",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklios.dev/apps/abhyas/",
+                tags: ["education", "tool"]
+            },
+            {
+                name: "Chapter Time",
+                repo: "chapter-time",
+                created: "2026-09-10",
+                updated: "2026-09-10",
+                description: "Read &amp; watch &mdash; a learning companion that maps every chapter of the Class 1 to JEE/NEET curriculum to a curated, verified video lesson (1,940 of 1,950 chapters covered), with a removable on-device AI tutor per chapter. Sibling of Abhyas; runs inside NakliOS.",
+                language: "HTML",
+                private: false,
+                homepage: "https://naklios.dev/apps/chapters/",
+                tags: ["education", "ai", "tool"]
+            },
+            {
+                name: "Quorum Forward Tests",
+                repo: "quorum-forward-tests",
+                created: "2026-08-13",
+                updated: "2026-09-11",
+                description: "Public, timestamped forecasts of opinion surveys, registered before the poll is fielded and scored against the published result. Quorum is a simulated-population engine &mdash; an open-weight model conditioned on real demographic frames &mdash; and the only honest test is to commit in advance. 30 of 32 registered claims hit across four waves.",
+                language: "Python",
+                private: false,
+                homepage: null,
+                tags: ["research", "ai", "data"]
+            },
+            {
+                name: "vise",
+                repo: "vise",
+                created: "2026-09-01",
+                updated: "2026-09-04",
+                description: "Holds the workpiece steady while the agent cuts. A local CLI that freezes what your code does &mdash; command outputs, exit codes, metrics &mdash; into a lockfile, then judges every later change against it: one line, one exit code. Never edits code, never calls a model. Ships with an opencode plugin that gates each agent turn.",
+                language: "Go",
+                private: false,
+                homepage: null,
+                tags: ["dev", "developer", "tool"]
+            },
+            {
+                name: "Ferrule",
+                repo: "ferrule",
+                created: "2026-09-02",
+                updated: "2026-09-04",
+                description: "Every LLM API key held once, encrypted, on your own machine &mdash; with one OpenAI-compatible endpoint on top that your whole house can use. One Go binary for macOS, Linux and Windows. No account, no server, no telemetry.",
+                language: "Go",
+                private: false,
+                homepage: null,
+                tags: ["dev", "security", "privacy", "ai"]
+            },
+            {
+                name: "warmswap",
+                repo: "warmswap",
+                created: "2026-08-30",
+                updated: "2026-08-30",
+                description: "Bit-identical failure recovery for a layer-split LLM serving pipeline &mdash; Cairn's recovery core rebuilt from scratch in Rust to be inspected. The distributed pieces run on a deterministic virtual clock, so a simulated mid-generation kill executes and is asserted on a laptop with zero GPUs, then again over real OS threads.",
+                language: "Rust",
+                private: false,
+                homepage: null,
+                tags: ["dev", "ml", "research"]
+            },
+            {
+                name: "Buckle",
+                repo: "buckle",
+                created: "2026-08-30",
+                updated: "2026-08-30",
+                description: "An architecture linter with numbers. Point it at a GitHub repo: it reads the shape of the code, builds a queueing model of the runtime topology, and loads it until it buckles &mdash; then names the component that gave way first and why. Built on breakscale's simulation engine.",
+                language: "TypeScript",
+                private: false,
+                homepage: "https://buckle.naklitechie.com",
+                tags: ["dev", "simulation", "tool"]
+            },
+            {
+                name: "Reckon",
+                repo: "reckon",
+                created: "2026-08-26",
+                updated: "2026-09-10",
+                description: "A spreadsheet you own: one HTML file that opens with a double-click and keeps your workbook on your own disk. Formulas (HyperFormula in a worker), multi-sheet, formats, sort and filter, CSV and XLSX import-export, charts, conditional formatting, data validation, and pivot tables. Nothing of ours in the loop.",
+                language: "HTML",
+                private: true,
+                homepage: "https://reckon.naklitechie.com",
+                tags: ["tool", "productivity", "data"]
+            },
+            {
+                name: "Draft",
+                repo: "draft",
+                created: "2026-08-26",
+                updated: "2026-09-10",
+                description: "A word processor you own. Headings, lists, tables, images, footnotes, find and replace, word count, print &mdash; a quiet centred page in a single HTML file, no account, no cloud, no Copilot. Documents are plain JSON on your disk with a Markdown sibling written on every save.",
+                language: "HTML",
+                private: true,
+                homepage: "https://draft.naklitechie.com",
+                tags: ["tool", "productivity", "publishing"]
+            },
+            {
+                name: "Plate",
+                repo: "plate",
+                created: "2026-08-26",
+                updated: "2026-09-07",
+                description: "A thin, sovereign explorer over 115,293 illustrated Encyclopaedia Britannica pages on the Internet Archive. Index the metadata once (~6 MB via DuckDB-wasm), browse forever from your own disk with counted facets and a dense card grid, open any page straight from archive.org. One HTML file.",
+                language: "HTML",
+                private: true,
+                homepage: "https://plate.naklitechie.com",
+                tags: ["history", "library", "data"]
+            },
             {
                 name: "Summon",
                 repo: "summon",
@@ -832,15 +956,15 @@
                 tags: ["history"]
             },
             {
-                name: "Books",
+                name: "Lorewell",
                 repo: "Books",
                 created: "2026-05-18",
-                updated: "2026-05-18",
-                description: "Browser-native reader for ePub, PDF, MOBI, AZW3, FB2 and plain text &mdash; single HTML file. Library, reading position, bookmarks, and per-book notes persist in your nakliOS folder.",
+                updated: "2026-09-10",
+                description: "A private semantic library and browser-native reader for ePub, PDF, MOBI, AZW3, FB2, TXT, Markdown and HTML &mdash; single HTML file. Reads a folder of books in place, keeps metadata beside them, and runs as the Books app inside NakliOS. Formerly Books.",
                 language: "HTML",
                 private: false,
-                homepage: "https://naklitechie.github.io/Books/",
-                tags: ["tool", "reading"]
+                homepage: "https://lorewell.naklitechie.com/",
+                tags: ["tool", "reading", "library"]
             },
             {
                 name: "Mantra",
@@ -869,7 +993,7 @@
                 repo: "crate",
                 created: "2026-05-22",
                 updated: "2026-05-22",
-                description: "A personal cloud folder. Files live in a bucket you own (Cloudflare R2 by default), encrypted before they leave your browser &mdash; AES-256-GCM, BYOK, no NakliTechie accounts on the path.",
+                description: "A personal cloud folder. Files live in a bucket you own (Cloudflare R2 by default), encrypted before they leave your browser &mdash; AES-256-GCM, BYOK, no NakliTechie accounts on the path. Crate Carrier is the one-click Cloudflare Worker that fronts your own R2 bucket for it &mdash; no API token, no CORS config.",
                 language: "JavaScript",
                 private: false,
                 homepage: "https://crate.naklitechie.com",
