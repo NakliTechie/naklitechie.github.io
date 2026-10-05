@@ -504,6 +504,17 @@
         // ── Projects — ordered by last updated (most recent first) ──
         const projects = [
             {
+                name: "diskformer.js",
+                repo: "diskformer.js",
+                created: "2026-10-04",
+                updated: "2026-10-05",
+                description: "Run a model larger than your GPU memory in a browser tab. diskformer.js keeps model weights on disk in the browser&rsquo;s private storage (OPFS) and pages into WebGPU only what each step needs: mixture-of-experts experts and per-layer embedding rows. Gemma 4 26B-A4B (14.4 GB) runs in 2 GB of GPU memory and gave llama.cpp&rsquo;s exact replies on 9 of 9 test chats; Qwen3.6 35B-A3B (36.9 GB) runs in 3.5 GB. A disk tier any WebGPU engine can use, with two reference engines, extracted from LocalMind. On npm as diskformer.",
+                language: "JavaScript",
+                private: false,
+                homepage: "https://diskformer.naklitechie.com",
+                tags: ["ai", "ml", "dev", "privacy", "webgpu"]
+            },
+            {
                 name: "FlyMate",
                 repo: "flymate",
                 created: "2026-09-18",
