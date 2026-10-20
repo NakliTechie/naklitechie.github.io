@@ -75,7 +75,7 @@ export async function start({ container, data, initialPlace, onExit, perf }) {
     if (!renderer.getContext()) throw new Error('no context');
   } catch {
     root.hidden = false;
-    root.innerHTML = '<div class="hw-fb"><div><p><b>The house needs WebGL.</b></p><p>Your browser or device has it turned off. The flat page has everything the house does.</p><p><button class="hw-x" style="font:inherit;padding:4px 10px;cursor:pointer">Back to the flat page</button></p></div></div>';
+    root.innerHTML = '<div class="hw-fb"><div><p><b>The house needs WebGL.</b></p><p>Your browser or device has it turned off. The flat page has everything the house does.</p><p style="color:#6B665A;font-size:13px">In Chrome, open <b>chrome://gpu</b>. If WebGL shows Disabled, quit Chrome completely (Cmd+Q on a Mac, not just the window) and reopen it, or try Safari.</p><p><button class="hw-x" style="font:inherit;padding:4px 10px;cursor:pointer">Back to the flat page</button></p></div></div>';
     root.querySelector('.hw-x').onclick = () => { if (onExit) onExit(); };
     return { show() { root.hidden = false; }, hide() { root.hidden = true; }, failed: true };
   }
