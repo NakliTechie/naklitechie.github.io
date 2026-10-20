@@ -104,9 +104,10 @@ export function buildWorld() {
   const ramps = [];      // {x0,x1,z0,z1,axis,a,b,y0,y1}
   const colliders = [];  // {x0,x1,z0,z1,y0,y1}
   const pools = [];
+  const hatchParts = {};
   const proxies = new Group(); // invisible pick boxes, one per place
   root.add(proxies);
-  const col = (x0, x1, y0, y1, z0, z1) => colliders.push({ x0, x1, z0, z1, y0, y1 });
+  const col = (x0, x1, y0, y1, z0, z1) => { const b = { x0, x1, z0, z1, y0, y1 }; colliders.push(b); return b; };
 
   const concrete = inkMaterial(ID.CONCRETE, 0.95, 'concrete');
   const stone = inkMaterial(ID.STONE, 0.78, 'stone');
@@ -183,8 +184,6 @@ export function buildWorld() {
 
   // hatch: open slot in the floor, lid propped open, stair to the water
   {
-    const lid = new Matrix4().compose(new Vector3(2.6, L1 + 0.55, 1.35), new Quaternion().setFromEuler(new Euler(1.2, 0, 0)), new Vector3(1, 1, 1));
-    P.boxM(concrete, 1.1, 0.07, 1.2, lid);
     const y0 = L1, y1 = 0.42, za = 1.5, zb = 6.0, n = 17;
     for (let i = 0; i < n; i++) {
       const t0 = i / n, t1 = (i + 1) / n;
@@ -192,11 +191,13 @@ export function buildWorld() {
       P.box(concrete, 2.05, 3.15, ytop - 0.09, ytop, lerp(za, zb, t0), lerp(za, zb, t1) + 0.02);
     }
     P.box(steel, 2.0, 2.08, y0 - 0.3, y0 + 0.9, za, za + 0.06);
-    ramps.push({ x0: 2.0, x1: 3.2, z0: za, z1: zb, axis: 'z', a: za, b: zb, y0, y1 });
+    const hatchRamp = { x0: 2.0, x1: 3.2, z0: za, z1: zb, axis: 'z', a: za, b: zb, y0, y1 };
+    ramps.push(hatchRamp);
+    hatchParts.ramp = hatchRamp;
     solid(rock, 0.8, 4.6, -0.6, 0.42, 6.0, 8.2, false);
     floors.push({ x0: 0.8, x1: 4.6, z0: 6.0, z1: 8.2, y: 0.42 });
     // side rails of the slot (collision): walls so the player stays on the stair
-    col(1.7, 2.0, 0, 6, za, 6.0); col(3.2, 3.5, 0, 6, za, 6.0);
+    hatchParts.rails = [col(1.7, 2.0, 0, 6, za, 6.0), col(3.2, 3.5, 0, 6, za, 6.0)];
   }
 
   // ---------- level 2 ----------
@@ -345,6 +346,22 @@ export function buildWorld() {
   ter.receiveShadow = true; ter.castShadow = false;
   root.add(ter);
 
+  // ---------- terrace furniture ----------
+  const planter = (x, z, top) => {
+    solid(concrete, x - .6, x + .6, top, top + .5, z - .3, z + .3);
+    P.add(foliage, new IcosahedronGeometry(.55, 1).translate(x, top + .85, z));
+  };
+  const table = (x, z, top) => {
+    solid(steel, x - .7, x + .7, top, top + .78, z - .45, z + .45);
+    for (const dx of [-1.1, 1.1]) solid(steel, x + dx - .22, x + dx + .22, top, top + .45, z - .22, z + .22);
+  };
+  [5, 8, 11, 14].forEach((x) => planter(x, 10.6, L1));
+  table(9.2, 7.4, L1);
+  [6, 8.5].forEach((x) => planter(x, 7.2, L2));
+  table(12.5, 4.6, L2);
+  [1.4, 3.2].forEach((x) => planter(x, 6.4, L3));
+  table(5.6, 4.6, L3);
+
   P.meshes(root);
 
   // ---------- water ----------
@@ -374,6 +391,30 @@ export function buildWorld() {
   const spray = new Points(sg, W.spray); spray.frustumCulled = false;
   root.add(spray);
 
+  // ---------- openable hatch: a concrete cover slides over the floor ----------
+  const cover = new Mesh(new BoxGeometry(1.2, 0.09, 4.5), concrete);
+  cover.position.set(3.8, L1 + 0.045, 3.75); cover.castShadow = cover.receiveShadow = true;
+  root.add(cover);
+  const hatchFloor = { x0: 2, x1: 3.2, z0: 1.5, z1: 6, y: -99 };
+  floors.push(hatchFloor);
+  const hatch = {
+    open: true, t: 1,
+    // closing is refused while the player is below the house, who could not get back up
+    toggle(playerY) {
+      if (this.open) { if (playerY < 3) return false; this.open = false; } else this.open = true;
+      hatchFloor.y = this.open ? -99 : L1;
+      hatchParts.ramp.off = !this.open;
+      hatchParts.rails.forEach((r) => { r.off = !this.open; });
+      return true;
+    },
+    update(dt) {
+      const goal = this.open ? 1 : 0;
+      this.t += Math.sign(goal - this.t) * Math.min(Math.abs(goal - this.t), dt / 0.7);
+      const e = this.t * this.t * (3 - 2 * this.t);
+      cover.position.x = lerp(2.6, 3.8, e);
+    },
+  };
+
   // ---------- lights ----------
   const sun = new DirectionalLight(0xffffff, 3.1);
   sun.position.set(34, 38, 26); sun.target.position.set(4, 4, 2);
@@ -385,16 +426,16 @@ export function buildWorld() {
   root.add(sun, sun.target, hemi);
 
   return {
-    root, floors, ramps, colliders, proxies, sun, water: W, rocks,
+    root, floors, ramps, colliders, proxies, sun, water: W, rocks, hatch, crowns, trunks,
     placeView: {
-      hearth:   { at: [4.6, 0.3], y: 4, look: [-1.3, 4.9, -0.5], anchor: [-1.3, 5.4, -0.05] },
-      apps:     { at: [6.5, 9.6], y: 4, look: [19, 3.8, 21], anchor: [11.5, 5.3, 8.0] },
-      engines:  { at: [12.5, 4.6], y: 7.4, look: [26, 6.0, 14], anchor: [10.5, 8.7, 5.5] },
-      training: { at: [6.5, 5.2], y: 10.8, look: [22, 8.5, 15], anchor: [4.5, 12.1, 4.8] },
-      stream:   { at: [4.2, 7.4], y: 0.42, look: [9, -1.5, 4.2], anchor: [2.8, 1.5, 7.1] },
-      guest:    { at: [2.5, -19.0], y: -1, look: [GUEST.cx, PAD_Y + 1.5, GUEST.cz], anchor: [GUEST.cx, PAD_Y + 4.0, GUEST.cz + 1] },
-      bridge:   { at: [-9, 11.6], y: 3.9, look: [-4, 4.5, 3], anchor: [-9, 5.2, 4.5] },
-      carport:  { at: [-3.2, 12.2], y: 3.7, look: [-8.5, 5.0, 17], anchor: [-8.5, 7.1, 17] },
+      hearth:   { at: [4.6, 0.3], y: 4, look: [-1.3, 4.9, -0.5], plan: [-1.3, -1.2], anchor: [-1.3, 6.3, -0.05] },
+      apps:     { at: [6.5, 9.6], y: 4, look: [19, 3.8, 21], plan: [11, 9.6], anchor: [11.5, 5.3, 8.0] },
+      engines:  { at: [12.5, 4.6], y: 7.4, look: [26, 6.0, 14], plan: [12.5, 5.2], anchor: [10.5, 8.7, 5.5] },
+      training: { at: [6.5, 5.2], y: 10.8, look: [22, 8.5, 15], plan: [4.5, 4.6], anchor: [4.5, 12.1, 4.8] },
+      stream:   { at: [4.2, 7.4], y: 0.42, look: [9, -1.5, 4.2], plan: [2.8, 7.4], anchor: [2.8, 1.5, 7.1] },
+      guest:    { at: [2.5, -19.0], y: -1, look: [GUEST.cx, PAD_Y + 1.5, GUEST.cz], plan: [GUEST.cx, GUEST.cz], anchor: [GUEST.cx, PAD_Y + 4.0, GUEST.cz + 1] },
+      bridge:   { at: [-9, 11.6], y: 3.9, look: [-4, 4.5, 3], plan: [-9, 4.5], anchor: [-9, 5.2, 4.5] },
+      carport:  { at: [-3.2, 12.2], y: 3.7, look: [-8.5, 5.0, 17], plan: [-8.5, 17], anchor: [-8.5, 7.1, 17] },
     },
     start: { at: [22, 18.5], y: -1, look: [6, 6.5, 4] },
   };
@@ -409,7 +450,7 @@ export function createWalker(world) {
     const h = terrainH(x, z);
     if (h > 1.6) out.push(h);
     for (const f of floors) if (x >= f.x0 && x <= f.x1 && z >= f.z0 && z <= f.z1) out.push(f.y);
-    for (const r of ramps) if (x >= r.x0 && x <= r.x1 && z >= r.z0 && z <= r.z1) {
+    for (const r of ramps) if (!r.off && x >= r.x0 && x <= r.x1 && z >= r.z0 && z <= r.z1) {
       const c = r.axis === 'z' ? z : x;
       out.push(lerp(r.y0, r.y1, (c - r.a) / (r.b - r.a)));
     }
@@ -424,7 +465,7 @@ export function createWalker(world) {
   }
   function blocked(x, z, fy) {
     for (const b of colliders) {
-      if (!(b.y0 < fy + 1.7 && b.y1 > fy + 0.5)) continue;
+      if (b.off || !(b.y0 < fy + 1.7 && b.y1 > fy + 0.5)) continue;
       const dx = Math.max(b.x0 - x, 0, x - b.x1), dz = Math.max(b.z0 - z, 0, z - b.z1);
       if (dx * dx + dz * dz < R * R) return true;
     }

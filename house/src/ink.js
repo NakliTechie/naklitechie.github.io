@@ -150,7 +150,7 @@ export function waterMaterials() {
 const INK_FRAG = /* glsl */ `
 precision highp float;
 uniform sampler2D tScene, tDepth;
-uniform vec2 uRes; uniform float uUnit, uNear, uFar, uTime;
+uniform vec2 uRes; uniform float uUnit, uNear, uFar, uTime, uFadeScale, uPlan;
 uniform vec3 uPaper, uInk;
 varying vec2 vUv;
 ${HASH}
@@ -184,11 +184,12 @@ void main(){
   float e = smoothstep(.025, .06, rel);
   float idr = floor(texture2D(tScene, vUv+vec2(o.x,0.)).g*16.+.5), idu = floor(texture2D(tScene, vUv+vec2(0.,o.y)).g*16.+.5);
   if (!sky) e = max(e, step(.5, abs(id-idr)+abs(id-idu)) * .6);
-  e *= 1. - smoothstep(70., 170., ld);
+  e *= 1. - smoothstep(70.*uFadeScale, 170.*uFadeScale, ld);
 
   // distance fades toward paper
-  float fade = smoothstep(35., 170., ld);
-  float dk = clamp(1. - tone, 0., 1.) * .8 * (1. - fade*.9);
+  float fade = smoothstep(35.*uFadeScale, 170.*uFadeScale, ld);
+  float pb = (!sky && id < 2.5) ? uPlan*.28 : 0.;
+  float dk = clamp(1. - tone + pb, 0., 1.) * .8 * (1. - fade*.9);
 
   vec2 p = px + vec2(sin(px.y*.05)*.7, sin(px.x*.04)*.7)*u;   // hand wobble
   vec2 cell = floor(px/u);
@@ -230,7 +231,7 @@ export class InkPass {
     this.mat = new ShaderMaterial({
       uniforms: {
         tScene: { value: null }, tDepth: { value: null }, uRes: { value: new Vector2(1, 1) },
-        uUnit: { value: 1 }, uNear: { value: near }, uFar: { value: far }, uTime: { value: 0 },
+        uUnit: { value: 1 }, uFadeScale: { value: 1 }, uPlan: { value: 0 }, uNear: { value: near }, uFar: { value: far }, uTime: { value: 0 },
         uPaper: { value: new Color('#F7F2E7') }, uInk: { value: new Color('#2C2A24') },
       },
       vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0., 1.); }',

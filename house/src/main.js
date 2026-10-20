@@ -23,6 +23,12 @@ const CSS = `
 .hw-pin b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#F7F2E7;border:1.5px solid #7A5C2E;font-weight:700}
 .hw-pin span{background:#F7F2E7;border:1px solid rgba(60,45,15,.35);padding:2px 6px;border-radius:2px;color:#2C2A24;white-space:nowrap}
 .hw-pin:hover b,.hw-pin.hot b{background:#7A5C2E;color:#F7F2E7}
+.hw-bar button[aria-pressed=true]{background:#2C2A24;color:#F7F2E7}
+.hw-btn{font:inherit;color:#2C2A24;background:none;border:1px solid rgba(60,45,15,.35);padding:3px 9px;border-radius:2px;cursor:pointer;margin:0 0 10px}
+.hw-btn:hover{background:#2C2A24;color:#F7F2E7}
+.hw-note{color:#7A5C2E;font-size:12px;margin:-4px 0 10px}
+.hw-plan{position:absolute;right:16px;bottom:16px;z-index:2;display:none;text-align:right;color:#2C2A24;font:600 12px/1.2 -apple-system,Helvetica,Arial,sans-serif;background:#F7F2E7;border:1px solid rgba(60,45,15,.35);padding:6px 10px}
+.hw-plan i{display:inline-block;height:6px;border:1.5px solid #2C2A24;border-top:0;margin-top:6px}
 .hw-hint{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);background:#F7F2E7;border:1px solid rgba(60,45,15,.35);padding:5px 10px;border-radius:2px;color:#6B665A;z-index:2;transition:opacity .4s;max-width:92vw;text-align:center}
 .hw-win{position:absolute;top:56px;right:14px;bottom:14px;width:min(430px,calc(100vw - 28px));background:#FFFDF7;border:1.5px solid #2C2A24;display:flex;flex-direction:column;z-index:4;user-select:text;-webkit-user-select:text}
 .hw-title{display:flex;align-items:center;gap:8px;padding:5px 8px;border-bottom:1.5px solid #2C2A24;background:repeating-linear-gradient(0deg,#F7F2E7 0 2px,#2C2A24 2px 3px) ;color:#2C2A24}
@@ -94,9 +100,12 @@ export async function start({ container, data, initialPlace, onExit, perf }) {
 
   // ---------- state ----------
   const places = data.places;
-  const P = { x: 0, z: 0, fy: 0, yaw: 0, pitch: 0, camY: 0 };
+  const PLAN_FOV = 40, PLAN_H = 85;
+  const P = { x: 0, z: 0, fy: 0, yaw: 0, pitch: 0, camY: 0, fov: 68 };
+  const baseFov = () => (camera.aspect < 0.8 ? 82 : 68);
   const keys = new Set();
   let joy = { x: 0, y: 0 };
+  let mode = 'walk', drifting = false, driftT = 0, saved = null, sepia = false, planBtn, sepiaBtn, planEl;
   let glideS = null, active = false, raf = 0, quality = coarse ? 0.8 : 1, hot = null, openId = null;
 
   function setView(vp) {
@@ -117,6 +126,10 @@ export async function start({ container, data, initialPlace, onExit, perf }) {
   function applyCam() {
     camera.position.set(P.x, P.camY, P.z);
     camera.rotation.set(P.pitch, P.yaw, 0);
+    if (camera.fov !== P.fov) { camera.fov = P.fov; camera.updateProjectionMatrix(); updateSprayScale(); }
+  }
+  function updateSprayScale() {
+    world.water.spray.uniforms.uScale.value = renderer.getDrawingBufferSize(new Vector2()).y / (2 * Math.tan(camera.fov * Math.PI / 360));
   }
 
   // ---------- sizing ----------
@@ -128,9 +141,10 @@ export async function start({ container, data, initialPlace, onExit, perf }) {
     const db = renderer.getDrawingBufferSize(new Vector2());
     ink.resize(db.x, db.y, Math.max(1, Math.round(pr)));
     camera.aspect = w / h;
-    camera.fov = camera.aspect < 0.8 ? 82 : 68;
+    P.fov = mode === 'plan' ? PLAN_FOV : baseFov();
+    camera.fov = P.fov;
     camera.updateProjectionMatrix();
-    world.water.spray.uniforms.uScale.value = db.y / (2 * Math.tan(camera.fov * Math.PI / 360));
+    updateSprayScale();
   }
 
   // ---------- UI ----------
@@ -142,7 +156,14 @@ export async function start({ container, data, initialPlace, onExit, perf }) {
     const b = el('button', '', `${i + 1} ${p.short}`); b.dataset.place = p.id; b.onclick = () => goPlace(p.id);
     chips.appendChild(b);
   });
-  bar.append(back, chips);
+  planBtn = el('button', '', 'Plan'); planBtn.title = 'Hatched site plan of the estate (P)'; planBtn.setAttribute('aria-pressed', 'false');
+  planBtn.onclick = () => (mode === 'plan' ? exitPlan() : enterPlan());
+  sepiaBtn = el('button', '', 'Sepia'); sepiaBtn.title = 'Draw in brown ink'; sepiaBtn.setAttribute('aria-pressed', 'false');
+  sepiaBtn.onclick = () => {
+    sepia = !sepia; sepiaBtn.setAttribute('aria-pressed', String(sepia));
+    ink.mat.uniforms.uInk.value.setRGB(...(sepia ? [0x7A, 0x5C, 0x2E] : [0x2C, 0x2A, 0x24]).map((v) => v / 255));
+  };
+  bar.append(back, planBtn, chips, sepiaBtn);
   root.appendChild(bar);
 
   const pins = {};
@@ -154,9 +175,11 @@ export async function start({ container, data, initialPlace, onExit, perf }) {
   });
   const hint = el('div', 'hw-hint d', coarse ? 'Drag to look · left stick to walk · tap a marker' : 'Drag to look · W A S D or arrows to walk · click a marker or part of the house');
   root.appendChild(hint);
+  const HINT0 = hint.textContent;
   const joyEl = el('div', 'hw-joy', '<i></i>'); root.appendChild(joyEl);
   let perfEl = null;
   if (perf) { perfEl = el('div', 'hw-perf'); root.appendChild(perfEl); }
+  planEl = el('div', 'hw-plan', 'Site plan · north is up<br><i></i> <span>10 m</span>'); root.appendChild(planEl);
   let win = null;
 
   function closeWin() {
@@ -174,6 +197,7 @@ export async function start({ container, data, initialPlace, onExit, perf }) {
     const x = el('button', '', '×'); x.setAttribute('aria-label', 'Close'); x.onclick = closeWin; t.appendChild(x);
     const body = el('div', 'hw-body');
     body.appendChild(el('p', 'blurb', pl.blurb));
+    if (id === 'stream') body.appendChild(hatchControl());
     if (pl.about) body.appendChild(el('div', '', data.aboutHtml));
     else for (const p of data.projectsIn(id)) body.appendChild(projectItem(p, data));
     win.append(t, body);
@@ -182,6 +206,18 @@ export async function start({ container, data, initialPlace, onExit, perf }) {
     chips.querySelectorAll('button').forEach((b) => b.classList.toggle('on', b.dataset.place === id));
     history.replaceState(null, '', '#house/' + id);
     x.focus({ preventScroll: true });
+  }
+  function hatchControl() {
+    const wrap = el('div');
+    const b = el('button', 'hw-btn', world.hatch.open ? 'Close the hatch' : 'Open the hatch');
+    const note = el('p', 'hw-note', '');
+    b.onclick = () => {
+      const ok = world.hatch.toggle(P.fy);
+      note.textContent = ok ? '' : 'You are below the hatch. Climb the stair first.';
+      b.textContent = world.hatch.open ? 'Close the hatch' : 'Open the hatch';
+    };
+    wrap.append(b, note);
+    return wrap;
   }
   function projectItem(p, d) {
     const it = el('div', 'hw-item');
@@ -201,14 +237,44 @@ export async function start({ container, data, initialPlace, onExit, perf }) {
     const [x, z] = vp.at;
     let fy = vp.y < 0 ? terrainH(x, z) : vp.y;
     const f = walker.floorAt(x, z, fy + 0.3); if (f !== null) fy = f;
-    const from = { x: P.x, y: P.camY, z: P.z, yaw: P.yaw, pitch: P.pitch };
     const save = { ...P };
     P.x = x; P.z = z; P.camY = fy + EYE; lookAt(vp.look);
-    const to = { x, y: fy + EYE, z, yaw: P.yaw, pitch: P.pitch, fy };
+    const to = { x, y: fy + EYE, z, yaw: P.yaw, pitch: P.pitch, fy, fov: baseFov() };
     Object.assign(P, save);
+    glideState(to, done);
+  }
+  function glideState(to, done) {
+    const from = { x: P.x, y: P.camY, z: P.z, yaw: P.yaw, pitch: P.pitch, fov: P.fov };
     let dyaw = to.yaw - from.yaw; dyaw -= Math.round(dyaw / (2 * Math.PI)) * 2 * Math.PI;
     const dist = Math.hypot(to.x - from.x, to.z - from.z, to.y - from.y);
-    glideS = { t: 0, dur: reduced ? 0.01 : Math.min(2.4, Math.max(0.9, dist / 16)), from, to, dyaw, lift: Math.min(dist * 0.1, 5), done };
+    glideS = { t: 0, dur: reduced ? 0.01 : Math.min(2.6, Math.max(0.9, dist / 16)), from, to, dyaw, lift: Math.min(dist * 0.1, 5), done };
+  }
+  function setTrees(v) { world.crowns.visible = v; world.trunks.visible = v; }
+  function enterPlan() {
+    if (mode === 'plan' || glideS) return;
+    stopDrift(); closeWin();
+    saved = { x: P.x, z: P.z, fy: P.fy, y: P.camY, yaw: P.yaw, pitch: P.pitch };
+    mode = 'plan'; setTrees(false); ink.mat.uniforms.uFadeScale.value = 3; ink.mat.uniforms.uPlan.value = 1;
+    planBtn.setAttribute('aria-pressed', 'true'); planEl.style.display = 'block';
+    hint.textContent = 'Site plan · click a marker to fly into that place'; hint.style.opacity = 1;
+    glideState({ x: 8, y: PLAN_H, z: -2, yaw: 0, pitch: -Math.PI / 2 + 0.001, fov: PLAN_FOV, fy: P.fy });
+  }
+  function leavePlan() {
+    mode = 'walk'; setTrees(true); ink.mat.uniforms.uFadeScale.value = 1; ink.mat.uniforms.uPlan.value = 0;
+    planBtn.setAttribute('aria-pressed', 'false'); planEl.style.display = 'none'; hint.textContent = HINT0; hint.style.opacity = 0;
+  }
+  function exitPlan() {
+    if (mode !== 'plan' || glideS) return;
+    leavePlan();
+    glideState({ ...saved, fov: baseFov() });
+  }
+  function stopDrift() { drifting = false; }
+  function driftStep(dt) {
+    driftT += dt;
+    const a = 0.62 + 0.3 * Math.sin(driftT * 0.1), R = 21.6;
+    P.x = 6 + R * Math.sin(a); P.z = 4 + R * Math.cos(a);
+    P.fy = terrainH(P.x, P.z); P.camY = P.fy + EYE + 4;
+    lookAt([6, 6.5, 4]);
   }
   function stepGlide(dt) {
     const g = glideS; g.t = Math.min(1, g.t + dt / g.dur);
@@ -216,11 +282,13 @@ export async function start({ container, data, initialPlace, onExit, perf }) {
     P.x = g.from.x + (g.to.x - g.from.x) * e; P.z = g.from.z + (g.to.z - g.from.z) * e;
     P.camY = g.from.y + (g.to.y - g.from.y) * e + Math.sin(Math.PI * e) * g.lift;
     P.yaw = g.from.yaw + g.dyaw * e; P.pitch = g.from.pitch + (g.to.pitch - g.from.pitch) * e;
+    P.fov = g.from.fov + (g.to.fov - g.from.fov) * e;
     if (g.t >= 1) { P.fy = g.to.fy; P.camY = g.to.y; const d = g.done; glideS = null; if (d) d(); }
   }
   function goPlace(id) {
     const vp = world.placeView[id]; if (!vp) return;
-    closeWin();
+    closeWin(); stopDrift();
+    if (mode === 'plan') leavePlan();
     glideTo(vp, () => openWin(id));
     hint.style.opacity = 0;
   }
@@ -238,6 +306,7 @@ export async function start({ container, data, initialPlace, onExit, perf }) {
   const joyC = () => { const r = joyEl.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
   canvas.addEventListener('pointerdown', (e) => {
     if (glideS) return;
+    stopDrift();
     canvas.setPointerCapture(e.pointerId);
     const inJoy = coarse && e.clientX < 160 && e.clientY > innerHeight - 170;
     if (inJoy) { joyId = e.pointerId; return; }
@@ -250,6 +319,7 @@ export async function start({ container, data, initialPlace, onExit, perf }) {
       joy = { x: dx, y: dy }; joyEl.firstChild.style.transform = `translate(${dx * 38}px,${dy * 38}px)`; return;
     }
     if (look && e.pointerId === look.id) {
+      if (mode === 'plan') return;
       P.yaw -= (e.clientX - look.x) * 0.005; P.pitch = Math.max(-1.3, Math.min(1.3, P.pitch - (e.clientY - look.y) * 0.005));
       look.x = e.clientX; look.y = e.clientY;
     } else if (e.pointerType === 'mouse' && !glideS) {
@@ -274,6 +344,8 @@ export async function start({ container, data, initialPlace, onExit, perf }) {
   const onKey = (e, v) => {
     if (!active) return;
     const k = e.key.toLowerCase();
+    if (e.type === 'keydown') stopDrift();
+    if (e.type === 'keydown' && k === 'p' && !e.target.closest('.hw-win')) { if (mode === 'plan') exitPlan(); else enterPlan(); return; }
     if (e.type === 'keydown' && k === 'escape') { if (win) closeWin(); else exit(); return; }
     if (['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright', 'shift'].includes(k)) {
       if (e.target.closest && e.target.closest('.hw-win')) return;
@@ -292,7 +364,7 @@ export async function start({ container, data, initialPlace, onExit, perf }) {
   function project() {
     const w = canvas.clientWidth, h = canvas.clientHeight;
     for (const p of places) {
-      const a = world.placeView[p.id].anchor, b = pins[p.id];
+      const pv = world.placeView[p.id], a = mode === 'plan' ? [pv.plan[0], 4, pv.plan[1]] : pv.anchor, b = pins[p.id];
       v3.set(a[0], a[1], a[2]).project(camera);
       const dist = Math.hypot(a[0] - P.x, a[1] - P.camY, a[2] - P.z);
       const vis = v3.z < 1 && Math.abs(v3.x) < 1.1 && v3.y > -1.1 && v3.y < 1.1 && dist < 90 && !(win && openId === p.id);
@@ -304,7 +376,10 @@ export async function start({ container, data, initialPlace, onExit, perf }) {
     raf = requestAnimationFrame(frame);
     const dt = Math.min(0.05, (now - last) / 1000 || 0.016); last = now; time += dt;
     // movement
+    world.hatch.update(dt);
     if (glideS) stepGlide(dt);
+    else if (mode === 'plan') { /* fixed overhead view */ }
+    else if (drifting && !win) driftStep(dt);
     else {
       let f = (keys.has('w') || keys.has('arrowup') ? 1 : 0) - (keys.has('s') || keys.has('arrowdown') ? 1 : 0) - joy.y;
       let s = (keys.has('d') ? 1 : 0) - (keys.has('a') ? 1 : 0) + joy.x;
@@ -324,6 +399,7 @@ export async function start({ container, data, initialPlace, onExit, perf }) {
     ink.render(renderer, scene, camera, time);
     if (!metrics.firstRenderMs) metrics.firstRenderMs = Math.round(performance.now() - r0);
     project();
+    if (mode === 'plan') planEl.querySelector('i').style.width = Math.round(10 * canvas.clientHeight / (2 * (PLAN_H - 4) * Math.tan(PLAN_FOV * Math.PI / 360))) + 'px';
     // metrics + adaptive resolution
     nFrames++; acc += dt; ema += (dt - ema) * 0.08;
     if (!metrics.firstFrameMs) { metrics.firstFrameMs = Math.round(performance.now() - T0); performance.mark('house-first-frame'); }
@@ -339,11 +415,11 @@ export async function start({ container, data, initialPlace, onExit, perf }) {
     root.hidden = false; active = true; resize();
     last = performance.now(); cancelAnimationFrame(raf); raf = requestAnimationFrame(frame);
     if (placeId && world.placeView[placeId]) { setView(world.start); applyCam(); goPlace(placeId); }
-    else if (!P.camY) { setView(world.start); }
+    else if (!P.camY) { setView(world.start); drifting = !reduced; }
     applyCam();
     hint.style.opacity = 1;
   }
-  function hide() { active = false; cancelAnimationFrame(raf); root.hidden = true; closeWin(); keys.clear(); }
+  function hide() { if (mode === 'plan') leavePlan(); stopDrift(); active = false; cancelAnimationFrame(raf); root.hidden = true; closeWin(); keys.clear(); }
   function exit() { hide(); if (onExit) onExit(); }
   document.addEventListener('visibilitychange', () => { if (document.hidden) cancelAnimationFrame(raf); else if (active) { last = performance.now(); raf = requestAnimationFrame(frame); } });
 
