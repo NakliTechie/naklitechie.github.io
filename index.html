@@ -157,6 +157,14 @@
             border-color: var(--muted) !important;
         }
 
+
+        .house-btn { display:inline-block; font-size:.9rem; padding:.35rem .8rem; border:1px solid var(--accent); color:var(--accent); background:none; border-radius:4px; cursor:pointer; }
+        .house-btn:hover { background:var(--accent); color:var(--bg); }
+        .place-bar { display:flex; flex-wrap:wrap; gap:.4rem; align-items:center; margin-bottom:.75rem; }
+        .place-bar .lbl { font-size:.8rem; color:var(--faint); margin-right:.25rem; }
+        .place-btn { font-size:.8rem; padding:.2rem .65rem; border:1px solid var(--border-strong); background:none; color:var(--primary); border-radius:4px; cursor:pointer; }
+        .place-btn:hover, .place-btn.active { background:var(--primary); color:var(--bg); }
+
         .section-title {
             color: var(--primary);
             border-bottom: 2px solid var(--border);
@@ -309,7 +317,7 @@
 </head>
 <body>
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="about">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-3 text-center text-md-start mb-3 mb-md-0">
@@ -350,6 +358,7 @@
                         <a href="https://naklitechie.substack.com/">
                             <i class="bi bi-journal-text"></i> Substack
                         </a>
+                        <button type="button" class="house-btn" id="house-open" title="An optional 3D walk through a house after Fallingwater, with the same projects as places"><i class="bi bi-house-door"></i> Walk the house</button>
                     </div>
                 </div>
             </div>
@@ -462,6 +471,7 @@
     <!-- Projects Section -->
     <section class="container mb-5">
         <h2 class="section-title"><i class="bi bi-collection"></i> Projects</h2>
+        <div class="place-bar" id="place-bar" aria-label="Places in the house"></div>
         <input type="text" id="project-search" placeholder="Search projects..." autocomplete="off">
         <div class="filter-bar" id="filter-bar"></div>
         <div class="row g-4" id="projects-grid">
@@ -1563,6 +1573,103 @@
             }
         ];
 
+
+        // ── Places: the one manifest behind both doors (flat menu and the 3D house) ──
+        const PLACES = [
+            { id: 'hearth',   short: 'Hearth',    title: 'The hearth: about Chirag',            about: true,
+              blurb: 'The stone hearth at the centre of the living room. Who builds all this.' },
+            { id: 'apps',     short: 'Browser AI tools', title: 'Lower terrace: browser AI tools',
+              blurb: 'The widest terrace, over the falls. Single-file apps that run a model, or a tool around one, in your browser tab.' },
+            { id: 'engines',  short: 'Inference engines', title: 'Middle terrace: local inference engines',
+              blurb: 'Getting big models to run on the hardware you have: engines, drivers, spot-GPU serving.' },
+            { id: 'training', short: 'Training',  title: 'Upper terrace: training experiments',
+              blurb: 'The smallest terrace, the highest. Small models trained, fine-tuned and measured.' },
+            { id: 'stream',   short: 'Experiments', title: 'The stream: experiments and research',
+              blurb: 'Down the hatch stair to the water: simulations, history and research that did not fit a product.' },
+            { id: 'guest',    short: 'NakliOS',   title: 'Guest house: NakliOS and its apps',
+              blurb: 'Up the covered walk: the browser desktop and the apps that live in it.' },
+            { id: 'bridge',   short: 'Writing',   title: 'The bridge: writing and knowledge',
+              blurb: 'Reading, publishing, learning and libraries. The way in to everything else.' },
+            { id: 'carport',  short: 'Tools & games', title: 'The carport: everyday tools and games',
+              blurb: 'Small useful things and games, parked by the road.' },
+        ];
+        const PLACE_REPO = {
+            engines:  ['diskformer.js', 'cairn', 'warmswap', 'ferrule', 'kohra', 'LocalMind', 'private-mesh', 'fathom', 'GPU-Programming', 'SortingBarrierBenchmark', 'qwen-backup', 'caucus'],
+            training: ['micro-gpt', 'Tapasya', 'erdos', 'sieve', 'chapter-time', 'quorum-forward-tests'],
+            stream:   ['flymate', 'PredictionMarket', 'SansadSaar', 'ingenious-machines', 'buckle'],
+            bridge:   ['Books', 'passage', 'plate', 'draft', 'kagaz', 'Anuvaad', 'india-2500'],
+        };
+        function placeByTags(p) {
+            const t = p.tags || [];
+            if (t.some(x => ['research', 'simulation', 'history'].includes(x))) return 'stream';
+            if (t.some(x => ['reading', 'publishing', 'education', 'library'].includes(x)) && !['CalendarLibrary', 'dotspin'].includes(p.repo)) return 'bridge';
+            if (t.includes('webgpu') || t.includes('ml')) return 'engines';
+            if (t.includes('ai') && !t.includes('game') && !t.includes('dev')) return 'apps';
+            return 'carport';
+        }
+        function placeOf(p) {
+            if (p.repo === 'nakliOS' || (p.homepage || '').includes('naklios.dev')) return 'guest';
+            const hit = Object.entries(PLACE_REPO).find(([, repos]) => repos.includes(p.repo));
+            return hit ? hit[0] : placeByTags(p);
+        }
+        const projectsIn = id => projects.filter(p => placeOf(p) === id);
+        window.NAKLI = {
+            places: PLACES, projects, placeOf, projectsIn,
+            repoUrl: p => getProjectRepoUrl(p),
+            get aboutHtml() {
+                const h = document.querySelector('.hero');
+                return Array.from(h.querySelectorAll('.bio-text')).map(e => '<p>' + e.innerHTML + '</p>').join('') +
+                    '<p>' + Array.from(h.querySelectorAll('.hero-links a')).map(a => a.outerHTML).join(' &middot; ') + '</p>';
+            },
+        };
+
+        // ── Place bar (flat menu door) ──
+        let activePlace = null;
+        function renderPlaceBar() {
+            const bar = document.getElementById('place-bar');
+            bar.innerHTML = '<span class="lbl">Places</span>' + PLACES.filter(p => !p.about).map(p =>
+                `<button class="place-btn" data-place="${p.id}">${p.short} <span style="opacity:.6">${projectsIn(p.id).length}</span></button>`).join('') +
+                '<a class="place-btn" href="#about" style="text-decoration:none">About</a>';
+            bar.querySelectorAll('button').forEach(btn => btn.addEventListener('click', () => {
+                activePlace = activePlace === btn.dataset.place ? null : btn.dataset.place;
+                bar.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.place === activePlace));
+                applyFilter();
+            }));
+        }
+
+        // ── The house: lazy module, loaded only on request ──
+        let houseCtl = null, houseLoading = null;
+        const hostEl = document.createElement('div');
+        function houseModule() {
+            if (!houseLoading) houseLoading = import('./house/dist/house.min.js');
+            return houseLoading;
+        }
+        async function openHouse(placeId) {
+            const btn = document.getElementById('house-open');
+            performance.mark('house-click');
+            btn.textContent = 'Loading the house…';
+            try {
+                const m = await houseModule();
+                performance.mark('house-imported');
+                if (!houseCtl) {
+                    document.body.appendChild(hostEl);
+                    houseCtl = await m.start({
+                        container: hostEl, data: window.NAKLI, initialPlace: placeId,
+                        perf: location.search.includes('perf'),
+                        onExit: () => { if (location.hash.startsWith('#house')) history.replaceState(null, '', location.pathname + location.search); document.documentElement.style.overflow = ''; },
+                    });
+                } else houseCtl.show(placeId);
+                performance.mark('house-interactive');
+                document.documentElement.style.overflow = 'hidden';
+                if (!placeId) history.replaceState(null, '', '#house');
+            } catch (e) {
+                console.error(e);
+                btn.textContent = 'The house could not load';
+                return;
+            }
+            btn.innerHTML = '<i class="bi bi-house-door"></i> Walk the house';
+        }
+
         // ── Active filter state ──
         let activeFilter = null;
         let searchQuery = '';
@@ -1600,7 +1707,8 @@
                 const text = col.textContent.toLowerCase();
                 const tagMatch = !activeFilter || tags.includes(activeFilter);
                 const searchMatch = !q || text.includes(q);
-                col.classList.toggle('hidden', !(tagMatch && searchMatch));
+                const placeMatch = !activePlace || col.dataset.place === activePlace;
+                col.classList.toggle('hidden', !(tagMatch && searchMatch && placeMatch));
             });
         }
 
@@ -1653,7 +1761,7 @@
                 const createdLabel = project.created ? fmtCreated(project.created) : '';
 
                 html += `
-                    <div class="col-md-6 col-lg-4 project-col" data-tags="${tagsData}">
+                    <div class="col-md-6 col-lg-4 project-col" data-tags="${tagsData}" data-place="${placeOf(project)}">
                         <div class="project-card p-4 d-flex flex-column">
                             <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:0.5rem;">
                                 <h5 style="margin:0;">${repoLink}</h5>
@@ -1683,6 +1791,11 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderProjects();
             renderFilterBar();
+            renderPlaceBar();
+            const hb = document.getElementById('house-open');
+            hb.addEventListener('click', () => openHouse());
+            ['pointerenter', 'touchstart', 'focus'].forEach(ev => hb.addEventListener(ev, () => { if (!navigator.connection?.saveData) houseModule().catch(() => {}); }, { once: true, passive: true }));
+            if (location.hash.startsWith('#house')) openHouse(location.hash.split('/')[1] || undefined);
             document.getElementById('project-search').addEventListener('input', e => {
                 searchQuery = e.target.value;
                 applyFilter();

@@ -1,0 +1,8 @@
+{
+  "name": "naklitechie-house",
+  "private": true,
+  "type": "module",
+  "scripts": { "build": "esbuild src/main.js --bundle --minify --format=esm --target=es2020 --outfile=dist/house.min.js" },
+  "dependencies": { "three": "0.169.0" },
+  "devDependencies": { "esbuild": "^0.25.0" }
+}
