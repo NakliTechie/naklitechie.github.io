@@ -17,6 +17,7 @@ const CSS = `
 .hw-bar button:focus-visible,.hw-win button:focus-visible,.hw-pin:focus-visible{outline:2px solid #7A5C2E;outline-offset:2px}
 .hw-chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex:1}
 .hw-chips::-webkit-scrollbar{display:none}
+@media (max-width:640px){.hw-chips{-webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);mask-image:linear-gradient(90deg,#000 88%,transparent);padding-right:18px}}
 .hw-chips button.on{border-color:#7A5C2E;color:#7A5C2E}
 .hw-chips button.on:hover{color:#F7F2E7;background:#7A5C2E}
 .hw-pin{position:absolute;left:0;top:0;z-index:2;display:flex;align-items:center;gap:6px;padding:0;border:0;background:none;color:#7A5C2E;font:600 12px/1 -apple-system,Helvetica,Arial,sans-serif;cursor:pointer;will-change:transform;pointer-events:auto}
@@ -30,13 +31,13 @@ const CSS = `
 .hw-plan{position:absolute;right:16px;bottom:16px;z-index:2;display:none;text-align:right;color:#2C2A24;font:600 12px/1.2 -apple-system,Helvetica,Arial,sans-serif;background:#F7F2E7;border:1px solid rgba(60,45,15,.35);padding:6px 10px}
 .hw-plan i{display:inline-block;height:6px;border:1.5px solid #2C2A24;border-top:0;margin-top:6px}
 .hw-hint{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);background:#F7F2E7;border:1px solid rgba(60,45,15,.35);padding:5px 10px;border-radius:2px;color:#6B665A;z-index:2;transition:opacity .4s;max-width:92vw;text-align:center}
-.hw-win{position:absolute;top:56px;right:14px;bottom:14px;width:min(430px,calc(100vw - 28px));background:#FFFDF7;border:1.5px solid #2C2A24;display:flex;flex-direction:column;z-index:4;user-select:text;-webkit-user-select:text}
+.hw-win{position:absolute;top:56px;right:14px;bottom:14px;width:min(430px,calc(100vw - 28px));background:#FFFDF7;border:1.5px solid #2C2A24;display:flex;flex-direction:column;z-index:4;user-select:text;-webkit-user-select:text;touch-action:pan-y}
 .hw-title{display:flex;align-items:center;gap:8px;padding:5px 8px;border-bottom:1.5px solid #2C2A24;background:repeating-linear-gradient(0deg,#F7F2E7 0 2px,#2C2A24 2px 3px) ;color:#2C2A24}
 .hw-title h2{margin:0;font:600 13px/1.2 -apple-system,Helvetica,Arial,sans-serif;background:#FFFDF7;padding:2px 8px;flex:0 1 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hw-title .sp{flex:1}
 .hw-title button{font:600 13px/1 -apple-system,Helvetica,Arial,sans-serif;background:#FFFDF7;border:1.5px solid #2C2A24;width:24px;height:24px;cursor:pointer;color:#2C2A24;padding:0}
 .hw-title button:hover{background:#2C2A24;color:#F7F2E7}
-.hw-body{overflow:auto;padding:12px 14px;flex:1;-webkit-overflow-scrolling:touch}
+.hw-body{touch-action:pan-y;overscroll-behavior:contain;overflow:auto;padding:12px 14px;flex:1;-webkit-overflow-scrolling:touch}
 .hw-body p.blurb{margin:0 0 10px;color:#6B665A}
 .hw-item{padding:9px 0;border-top:1px solid rgba(60,45,15,.14)}
 .hw-item h3{margin:0 0 2px;font-size:15px;font-weight:600;line-height:1.3}
@@ -46,9 +47,9 @@ const CSS = `
 .hw-item .ac{display:flex;gap:10px;font-size:12px}
 .hw-item .ac a{color:#2C2A24}
 .hw-body a{color:#7A5C2E}
-.hw-joy{position:absolute;left:18px;bottom:22px;width:110px;height:110px;border-radius:50%;border:1.5px solid rgba(60,45,15,.35);background:rgba(247,242,231,.5);z-index:2;display:none}
+.hw-joy{position:absolute;left:18px;bottom:calc(22px + env(safe-area-inset-bottom,0px));width:110px;height:110px;border-radius:50%;border:1.5px solid rgba(60,45,15,.35);background:rgba(247,242,231,.5);z-index:2;display:none}
 .hw-joy i{position:absolute;left:50%;top:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:#2C2A24;opacity:.7}
-@media (pointer:coarse){.hw-joy{display:block}.hw-hint.d{display:none}}
+@media (pointer:coarse){.hw-joy{display:block}.hw-pin b{width:32px;height:32px;font-size:13px}.hw-hint{bottom:auto;top:58px}}
 .hw-fb{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:20px;z-index:5;background:#F7F2E7}
 .hw-perf{position:absolute;left:8px;bottom:8px;font:11px/1.3 ui-monospace,Menlo,monospace;color:#6B665A;z-index:3;white-space:pre}
 @media (max-width:640px){.hw-win{top:auto;left:8px;right:8px;width:auto;height:62vh;bottom:8px}.hw-pin span{display:none}.hw-bar .lbl{display:none}}
@@ -100,7 +101,8 @@ export async function start({ container, data, initialPlace, onExit, perf }) {
 
   // ---------- state ----------
   const places = data.places;
-  const PLAN_FOV = 40, PLAN_H = 85;
+  const PLAN_FOV = 40, PLAN_CX = -9, PLAN_CZ = -1;
+  let planH = 71;
   const P = { x: 0, z: 0, fy: 0, yaw: 0, pitch: 0, camY: 0, fov: 68 };
   const baseFov = () => (camera.aspect < 0.8 ? 82 : 68);
   const keys = new Set();
@@ -254,14 +256,16 @@ export async function start({ container, data, initialPlace, onExit, perf }) {
     if (mode === 'plan' || glideS) return;
     stopDrift(); closeWin();
     saved = { x: P.x, z: P.z, fy: P.fy, y: P.camY, yaw: P.yaw, pitch: P.pitch };
-    mode = 'plan'; setTrees(false); ink.mat.uniforms.uFadeScale.value = 3; ink.mat.uniforms.uPlan.value = 1;
-    planBtn.setAttribute('aria-pressed', 'true'); planEl.style.display = 'block';
+    // fit the whole estate: half-width 30 m, half-height 26 m, whichever the screen shape demands
+    planH = Math.max(26, 30 / camera.aspect) / Math.tan(PLAN_FOV * Math.PI / 360);
+    mode = 'plan'; setTrees(false); ink.mat.uniforms.uFadeScale.value = Math.max(3, planH / 20); ink.mat.uniforms.uPlan.value = 1;
+    planBtn.setAttribute('aria-pressed', 'true'); planEl.style.display = 'block'; joyEl.style.visibility = 'hidden';
     hint.textContent = 'Site plan · click a marker to fly into that place'; hint.style.opacity = 1;
-    glideState({ x: 8, y: PLAN_H, z: -2, yaw: 0, pitch: -Math.PI / 2 + 0.001, fov: PLAN_FOV, fy: P.fy });
+    glideState({ x: PLAN_CX, y: planH, z: PLAN_CZ, yaw: 0, pitch: -Math.PI / 2 + 0.001, fov: PLAN_FOV, fy: P.fy });
   }
   function leavePlan() {
     mode = 'walk'; setTrees(true); ink.mat.uniforms.uFadeScale.value = 1; ink.mat.uniforms.uPlan.value = 0;
-    planBtn.setAttribute('aria-pressed', 'false'); planEl.style.display = 'none'; hint.textContent = HINT0; hint.style.opacity = 0;
+    planBtn.setAttribute('aria-pressed', 'false'); planEl.style.display = 'none'; joyEl.style.visibility = ''; hint.textContent = HINT0; hint.style.opacity = 0;
   }
   function exitPlan() {
     if (mode !== 'plan' || glideS) return;
@@ -367,7 +371,7 @@ export async function start({ container, data, initialPlace, onExit, perf }) {
       const pv = world.placeView[p.id], a = mode === 'plan' ? [pv.plan[0], 4, pv.plan[1]] : pv.anchor, b = pins[p.id];
       v3.set(a[0], a[1], a[2]).project(camera);
       const dist = Math.hypot(a[0] - P.x, a[1] - P.camY, a[2] - P.z);
-      const vis = v3.z < 1 && Math.abs(v3.x) < 1.1 && v3.y > -1.1 && v3.y < 1.1 && dist < 90 && !(win && openId === p.id);
+      const vis = v3.z < 1 && Math.abs(v3.x) < 1.1 && v3.y > -1.1 && v3.y < 1.1 && (mode === 'plan' || dist < 90) && !(win && openId === p.id);
       b.style.display = vis ? '' : 'none';
       if (vis) b.style.transform = `translate(${((v3.x + 1) / 2) * w - 13}px,${((1 - v3.y) / 2) * h - 13}px)`;
     }
@@ -399,7 +403,7 @@ export async function start({ container, data, initialPlace, onExit, perf }) {
     ink.render(renderer, scene, camera, time);
     if (!metrics.firstRenderMs) metrics.firstRenderMs = Math.round(performance.now() - r0);
     project();
-    if (mode === 'plan') planEl.querySelector('i').style.width = Math.round(10 * canvas.clientHeight / (2 * (PLAN_H - 4) * Math.tan(PLAN_FOV * Math.PI / 360))) + 'px';
+    if (mode === 'plan') planEl.querySelector('i').style.width = Math.round(10 * canvas.clientHeight / (2 * (planH - 4) * Math.tan(PLAN_FOV * Math.PI / 360))) + 'px';
     // metrics + adaptive resolution
     nFrames++; acc += dt; ema += (dt - ema) * 0.08;
     if (!metrics.firstFrameMs) { metrics.firstFrameMs = Math.round(performance.now() - T0); performance.mark('house-first-frame'); }
