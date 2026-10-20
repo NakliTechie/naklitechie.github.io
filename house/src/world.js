@@ -46,7 +46,7 @@ export function terrainH(x, z) {
   // flatten under the house and the guest pad
   const fx = Math.max(Math.max(-4.8 - x, 0), Math.max(x - 12, 0)), fz = Math.max(Math.max(-4.8 - z, 0), Math.max(z - 4.5, 0));
   h = lerp(3.0, h, sstep(0, 2.2, Math.hypot(fx, fz)));
-  const gx = Math.max(Math.abs(x - GUEST.cx) - 6.5, 0), gz = Math.max(Math.abs(z - GUEST.cz) - 5.5, 0);
+  const gx = Math.max(Math.abs(x - GUEST.cx) - 6.5, 0), gz = Math.max(Math.abs(z - GUEST.cz) - 8.5, 0);
   h = lerp(PAD_Y, h, sstep(0, 3.5, Math.hypot(gx, gz)));
   // carport/driveway pad on the south bank
   const cx2 = Math.max(Math.abs(x + 8) - 6, 0), cz2 = Math.max(Math.abs(z - 16) - 3, 0);
@@ -256,6 +256,22 @@ export function buildWorld() {
     col(-11.5, -7, cy, cy + 1.2, 16.2, 17.8);
     proxy('carport', -12.5, -4.8, cy, cy + 3.2, 14.5, 19.5);
   }
+  // small outbuildings: workshop (developer tools) and spring house (privacy)
+  const outbuilding = (id, cx, cz, w, d, face) => {
+    const fy = terrainH(cx, cz) + 0.1, x0 = cx - w / 2, x1 = cx + w / 2, z0 = cz - d / 2, z1 = cz + d / 2, h = 2.7;
+    solid(stone, x0 - .2, x1 + .2, fy - 1.6, fy - 0.02, z0 - .2, z1 + .2, false);
+    floors.push({ x0: x0 - .2, x1: x1 + .2, z0: z0 - .2, z1: z1 + .2, y: fy });
+    const front = face > 0 ? z1 : z0, back = face > 0 ? z0 : z1;
+    stoneWall(x0, x1, fy, fy + h, face > 0 ? back : back - 0.5, face > 0 ? back + 0.5 : back);
+    stoneWall(x0, x0 + 0.5, fy, fy + h, z0, z1); stoneWall(x1 - 0.5, x1, fy, fy + h, z0, z1);
+    glassWall('x', front - face * 0.1, x0 + .5, x1 - .5, fy, fy + h, [cx - 0.6, cx + 0.6]);
+    solid(concrete, x0 - .7, x1 + .7, fy + h, fy + h + .4, z0 - .7, z1 + .7);
+    proxy(id, x0 - .7, x1 + .7, fy - 0.2, fy + h + .5, z0 - .7, z1 + .7);
+    return fy;
+  };
+  const workshopFy = outbuilding('workshop', -22, 17, 5.5, 4, -1);
+  const springFy = outbuilding('springhouse', -34, -3, 4.5, 3.6, 1);
+
   // covered walkway uphill to the guest house
   {
     const a = new Vector3(-7.2, 0, -5.8), b = new Vector3(GUEST.cx + 0.5, 0, GUEST.cz + 4.2);
@@ -289,7 +305,7 @@ export function buildWorld() {
     for (const x of [gx0 + 1, GUEST.cx, gx1 - 1]) solid(steel, x - .1, x + .1, gy, gy + 2.7, gz1 + 3.2, gz1 + 3.4);
     col(gx0 - 0.8, gx1 + 0.8, gy + 2.7, gy + 3.2, gz0 - 0.8, gz1 + 3.4);
     // spring-fed pool beyond the roof
-    const px0 = gx0 + 0.5, px1 = gx0 + 7, pz0 = gz1 + 4.6, pz1 = gz1 + 7;
+    const px0 = gx0 + 0.5, px1 = gx0 + 7, pz0 = gz1 + 4.2, pz1 = gz1 + 6.4;
     P.box(stone, px0 - .3, px1 + .3, gy - 0.1, gy + 0.3, pz0 - .3, pz0); P.box(stone, px0 - .3, px1 + .3, gy - 0.1, gy + 0.3, pz1, pz1 + .3);
     P.box(stone, px0 - .3, px0, gy - 0.1, gy + 0.3, pz0, pz1); P.box(stone, px1, px1 + .3, gy - 0.1, gy + 0.3, pz0, pz1);
     col(px0 - .3, px1 + .3, gy, gy + 0.3, pz0 - .3, pz1 + .3);
@@ -324,6 +340,7 @@ export function buildWorld() {
     if (x > 8 && x < 40 && z > 8 && z < 34) continue;                  // postcard view from downstream
     if (Math.abs(x - GUEST.cx) < 9 && z < -14 && z > -27) continue;    // guest pad
     if (x > -15 && x < -3 && z > 13 && z < 21) continue;               // carport
+    if (Math.hypot(x + 22, z - 17) < 8 || Math.hypot(x + 34, z + 3) < 8) continue; // outbuildings
     if (Math.abs(x + 9) < 3 && z > -5 && z < 14) continue;             // bridge road
     if (x > -11 && x < -4 && z < -4 && z > GUEST.cz + 3) continue;     // walkway
     treePos.push({ x, y: h, z, s: 1.5 + rnd() * 1.6 });
@@ -435,6 +452,9 @@ export function buildWorld() {
       stream:   { at: [4.2, 7.4], y: 0.42, look: [9, -1.5, 4.2], plan: [2.8, 7.4], anchor: [2.8, 1.5, 7.1] },
       guest:    { at: [2.5, -19.0], y: -1, look: [GUEST.cx, PAD_Y + 1.5, GUEST.cz], plan: [GUEST.cx, GUEST.cz], anchor: [GUEST.cx, PAD_Y + 4.0, GUEST.cz + 1] },
       bridge:   { at: [-9, 11.6], y: 3.9, look: [-4, 4.5, 3], plan: [-9, 4.5], anchor: [-9, 5.2, 4.5] },
+      workshop: { at: [-22, -1.5], y: -1, look: [-22, workshopFy + 1.8, 17], plan: [-22, 17], anchor: [-22, workshopFy + 4.2, 17] },
+      springhouse: { at: [-34, 13], y: -1, look: [-34, springFy + 1.8, -3], plan: [-34, -3], anchor: [-34, springFy + 4.2, -3] },
+      pool:     { at: [-2.5, -14.8], y: -1, look: [-9.75, PAD_Y + 0.3, -13.5], plan: [-9.75, -13.5], anchor: [-9.75, PAD_Y + 2.4, -13.5] },
       carport:  { at: [-3.2, 12.2], y: 3.7, look: [-8.5, 5.0, 17], plan: [-8.5, 17], anchor: [-8.5, 7.1, 17] },
     },
     start: { at: [22, 18.5], y: -1, look: [6, 6.5, 4] },
