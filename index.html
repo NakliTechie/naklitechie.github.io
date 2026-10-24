@@ -1816,20 +1816,24 @@
               blurb: 'Linters, harnesses, libraries and agents-for-agents. The tools that build the other tools.' },
             { id: 'springhouse', short: 'Privacy', title: 'The spring house: privacy and security',
               blurb: 'Vaults, mesh, encrypted tools. Cold, quiet and kept apart from the main house.' },
-            { id: 'pool', short: 'Games', title: 'The pool: games and play',
-              blurb: 'By the guest house: chess, strategy and other games against models and each other.' },
+            { id: 'pool', short: 'Games & toys', title: 'The pool: games and toys',
+              blurb: 'By the guest house: chess, strategy, palettes, spinners and other things to play with.' },
         ];
         const PLACE_REPO = {
-            engines:  ['diskformer.js', 'cairn', 'warmswap', 'ferrule', 'kohra', 'LocalMind', 'private-mesh', 'fathom', 'GPU-Programming', 'SortingBarrierBenchmark', 'qwen-backup', 'caucus'],
-            training: ['micro-gpt', 'Tapasya', 'erdos', 'sieve', 'chapter-time', 'quorum-forward-tests'],
-            stream:   ['flymate', 'PredictionMarket', 'SansadSaar', 'ingenious-machines', 'buckle'],
-            bridge:   ['Books', 'passage', 'plate', 'draft', 'kagaz', 'Anuvaad', 'india-2500'],
-            workshop: ['CalendarLibrary', 'dotspin'],
+            guest:    ['private-mesh', 'vocella', 'Books'],
+            engines:  ['diskformer.js', 'cairn', 'warmswap', 'kohra', 'LocalMind', 'fathom', 'qwen-backup', 'Karkhana'],
+            training: ['micro-gpt', 'Tapasya', 'erdos', 'sieve', 'chapter-time', 'quorum-forward-tests', 'sqlforge', 'plumb', 'chromium-lora', 'spot-gpu-guide'],
+            stream:   ['flymate', 'PredictionMarket', 'SansadSaar', 'ingenious-machines', 'buckle', 'GPU-Programming', 'SortingBarrierBenchmark'],
+            bridge:   ['passage', 'plate', 'draft', 'kagaz', 'Anuvaad', 'india-2500', 'prompts', 'VaultMind', 'scholia'],
+            workshop: ['caucus', 'NakliPoster'],
+            springhouse: ['ferrule', 'crate'],
+            pool:     ['colour-mixer', 'rangrez', 'Clacker', 'dotspin', 'CalendarLibrary'],
+            carport:  ['docket'],
         };
         const hasAny = (t, xs) => xs.some(x => t.includes(x));
         const TAG_RULES = [
             ['stream',   t => hasAny(t, ['research', 'simulation', 'history'])],
-            ['bridge',   (t, p) => hasAny(t, ['reading', 'publishing', 'education', 'library']) && !['CalendarLibrary', 'dotspin'].includes(p.repo)],
+            ['bridge',   t => hasAny(t, ['reading', 'publishing', 'education', 'library'])],
             ['engines',  t => hasAny(t, ['webgpu', 'ml'])],
             ['apps',     t => t.includes('ai') && !hasAny(t, ['game', 'dev'])],
             ['pool',     t => t.includes('game')],
